@@ -46,8 +46,12 @@
         </div>
       </div>
       <div class="links">
-        <div class="signup">SIGNUP</div>
-        <div class="forgot-password">FORGOT PASSWORD?</div>
+        <div class="signup">
+          <b>SIGNUP</b>
+        </div>
+        <div class="forgot-password">
+          <b> FORGOT PASSWORD? </b>
+        </div>
       </div>
     </div>
   </div>
