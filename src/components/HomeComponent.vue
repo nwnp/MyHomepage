@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="container">
+  <section class="container">
+    <div class="home-container">
       <div>
         <h2 class="title">LOGIN</h2>
       </div>
@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -74,11 +74,10 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.home-container {
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   border-radius: 15px;
   width: 300px;
   height: 500px;

@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <article class="home">
     <HomeComponent />
-  </div>
+  </article>
 </template>
 
 <script>
@@ -12,12 +12,6 @@ export default {
   components: {
     HomeComponent,
   },
-  data() {
-    return {
-      email: "",
-      password: "",
-    };
-  },
 };
 </script>
 
@@ -25,5 +19,7 @@ export default {
 .home {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 </style>

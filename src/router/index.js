@@ -11,6 +11,10 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/main",
+    component: () => import("@/views/MainView.vue"),
+  },
+  {
     path: "*",
     component: () => import("../views/NotFound.vue"),
   },
