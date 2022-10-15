@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <div class="main-container">
+    <div class="wrap">
       <h1>main page</h1>
     </div>
   </section>
@@ -14,4 +14,18 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.wrap {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  height: 100vh;
+  width: 800px;
+}
+@media (max-width: 500px) {
+  .wrap {
+    width: 300px;
+  }
+}
+</style>

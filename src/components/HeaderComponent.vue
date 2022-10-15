@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <div class="header-container">
-      <div class="header-box">Jin's Homepage</div>
+    <div class="wrap">
+      <div class="header-box">
+        <router-link to="/main"> Jin's Homepage </router-link>
+      </div>
       <div class="header-box">자기소개서</div>
       <div class="header-box">포트폴리오</div>
       <div class="button-wrap">
@@ -22,7 +24,7 @@ export default {
 </script>
 
 <style scoped>
-.header-container {
+.wrap {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -38,6 +40,15 @@ button {
   color: white;
   cursor: pointer;
   transition: all 0.9s;
+}
+
+.header-box {
+  cursor: pointer;
+}
+
+.header-box a {
+  color: white;
+  text-decoration: none;
 }
 
 button:hover {

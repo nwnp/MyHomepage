@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article class="main">
     <MainComponent />
   </article>
 </template>
@@ -17,4 +17,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+</style>
