@@ -1,15 +1,17 @@
 <template>
   <section class="container">
     <div class="wrap">
-      <h1>main page</h1>
+      <CarouselComponent />
     </div>
   </section>
 </template>
 
 <script>
+import CarouselComponent from "@/components/common/CarouselComponent.vue";
+
 export default {
-  data() {
-    return {};
+  components: {
+    CarouselComponent,
   },
 };
 </script>
@@ -19,14 +21,20 @@ export default {
   display: flex;
   justify-content: center;
   background-color: white;
-  align-items: center;
-  height: 500px;
-  width: 300px;
+  height: 95vh;
+  width: 95vh;
   border-radius: 15px;
 }
-@media (max-width: 500px) {
+
+@media (max-width: 880px) and (min-width: 700px) {
   .wrap {
-    width: 300px;
+    width: 700px;
+  }
+}
+
+@media (max-width: 699px) and (min-width: 300px) {
+  .wrap {
+    width: 350px;
   }
 }
 </style>

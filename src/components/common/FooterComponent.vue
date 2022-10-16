@@ -21,13 +21,15 @@ export default {};
   display: flex;
   justify-content: center;
   background-color: white;
+  width: 100%;
 }
 
 .wrap {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 500px;
+  justify-content: space-around;
+  height: 100%;
+  width: 100%;
   align-items: center;
 }
 
