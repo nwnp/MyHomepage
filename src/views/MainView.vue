@@ -1,15 +1,20 @@
 <template>
-  <article class="main">
-    <MainComponent />
-  </article>
+  <div>
+    <article class="main">
+      <MainComponent />
+    </article>
+    <FooterComponent />
+  </div>
 </template>
 
 <script>
 import MainComponent from "@/components/MainComponent.vue";
+import FooterComponent from "@/components/common/FooterComponent.vue";
 
 export default {
   components: {
     MainComponent,
+    FooterComponent,
   },
   data() {
     return {};

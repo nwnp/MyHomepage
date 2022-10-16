@@ -20,8 +20,9 @@ export default {
   justify-content: center;
   background-color: white;
   align-items: center;
-  height: 100vh;
-  width: 800px;
+  height: 500px;
+  width: 300px;
+  border-radius: 15px;
 }
 @media (max-width: 500px) {
   .wrap {
