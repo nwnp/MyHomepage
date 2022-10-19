@@ -14,7 +14,16 @@
 </template>
 
 <script>
+// import gql from "graphql-tag";
+
 export default {
+  data() {
+    return {
+      email: "ujmn0418@gmail.com",
+      password: "dnwjdwls1!@AS",
+    };
+  },
+  apollo: {},
   methods: {
     projectList() {
       console.log("clicked");
