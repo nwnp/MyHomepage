@@ -19,11 +19,12 @@ export default {
 <style scoped>
 .wrap {
   display: flex;
-  justify-content: center;
   background-color: white;
   height: 95vh;
   width: 95vh;
   border-radius: 15px;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media (max-width: 880px) and (min-width: 700px) {
