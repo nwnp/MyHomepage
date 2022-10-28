@@ -1,5 +1,7 @@
 <template>
-  <InfoComponent />
+  <div class="container">
+    <InfoComponent />
+  </div>
 </template>
 
 <script>
@@ -12,4 +14,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+  height: 100%;
+  display: flex;
+  margin: 10px;
+}
+</style>
