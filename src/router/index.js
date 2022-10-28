@@ -12,7 +12,7 @@ const routes = [
   },
   {
     path: "/main",
-    component: () => import("@/views/MainView.vue"),
+    component: () => import("@/views/MainPage.vue"),
   },
   {
     path: "*",

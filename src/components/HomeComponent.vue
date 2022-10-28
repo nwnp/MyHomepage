@@ -66,8 +66,12 @@ export default {
     };
   },
   methods: {
-    submitLogin() {
-      console.log(this.email, this.password);
+    async submitLogin() {
+      const payload = {
+        email: this.email,
+        password: this.password,
+      };
+      await this.$store.dispatch("Login", payload);
     },
   },
 };
