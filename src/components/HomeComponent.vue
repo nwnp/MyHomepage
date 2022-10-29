@@ -1,7 +1,6 @@
 <template>
   <section class="container">
     <div class="home-container">
-      <div>{{ me }}</div>
       <div>
         <h2 class="title">LOGIN</h2>
       </div>
@@ -60,7 +59,6 @@
 
 <script>
 import { Query } from "@/apollo/query/index.js";
-import gql from "graphql-tag";
 
 export default {
   data() {
@@ -79,9 +77,6 @@ export default {
         };
       },
     },
-  },
-  created() {
-    // console.log(this.$apollo.queries.me);
   },
   methods: {
     async submitLogin() {
