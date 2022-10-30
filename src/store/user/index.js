@@ -1,3 +1,5 @@
+import { Mutation } from "@/apollo/mutation/mutations.js";
+
 export default {
   state: {
     user: {
@@ -22,6 +24,15 @@ export default {
     async Login({ commit }, user) {
       localStorage.setItem("user", JSON.stringify(user));
       commit("setUser", user);
+    },
+    async Signup({ commit }, user, apollo) {
+      const result = await apollo.mutate({
+        mutation: Mutation.signup,
+        variables: {
+          ...user,
+        },
+      });
+      console.log(result);
     },
   },
 };

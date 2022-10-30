@@ -47,7 +47,7 @@
       </div>
       <div class="links">
         <div class="signup">
-          <b>SIGNUP</b>
+          <router-link to="/signup">SIGNUP</router-link>
         </div>
         <div class="forgot-password">
           <b> FORGOT PASSWORD? </b>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { Query } from "@/apollo/query/index.js";
+import { Query } from "@/apollo/query/query.js";
 
 export default {
   data() {
@@ -68,16 +68,16 @@ export default {
       id: 4,
     };
   },
-  apollo: {
-    me: {
-      query: Query.me,
-      variables() {
-        return {
-          id: this.id,
-        };
-      },
-    },
-  },
+  // apollo: {
+  //   me: {
+  //     query: Query.me,
+  //     variables() {
+  //       return {
+  //         id: this.id,
+  //       };
+  //     },
+  //   },
+  // },
   methods: {
     async submitLogin() {
       const payload = {
@@ -162,5 +162,10 @@ i {
 .links {
   display: flex;
   justify-content: space-between;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 </style>
