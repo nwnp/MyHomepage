@@ -4,6 +4,7 @@ export const Query = {
   me: gql`
     query ($id: ID!) {
       me(id: $id) {
+        id
         email
         nickname
         githubUrl

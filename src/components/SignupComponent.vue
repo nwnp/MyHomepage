@@ -98,15 +98,23 @@ export default {
         blogUrl: this.blogUrl,
       };
 
-      const result = await this.$apollo.mutate({
-        mutation: Mutation.signup,
-        variables: {
-          user: { ...payload },
-        },
-      });
-
-      // console.log(result.data.signup);
-      this.clearForm();
+      await this.$apollo
+        .mutate({
+          mutation: Mutation.signup,
+          variables: {
+            user: { ...payload },
+          },
+        })
+        .then((res) => {
+          console.log(res.data.signup);
+          this.clearForm();
+          this.$router.push({ path: "/" });
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("가입에 실패했습니다. 다시 시도해주세요.");
+          this.clearForm();
+        });
     },
     clearForm() {
       this.email = "";

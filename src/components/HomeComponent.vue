@@ -123,6 +123,7 @@ input {
 }
 
 button {
+  cursor: pointer;
   width: 100%;
   border-radius: 15px;
   height: 35px;
@@ -130,6 +131,11 @@ button {
   color: white;
   margin-top: 1em;
   border: none;
+  transition: all, 0.5s;
+}
+
+button:hover {
+  background-color: #60b6f0;
 }
 
 i {
