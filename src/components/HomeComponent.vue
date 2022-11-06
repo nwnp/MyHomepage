@@ -59,6 +59,8 @@
 
 <script>
 import { Mutation } from "@/apollo/mutation/mutations";
+import { isLoggedIn } from "../functions/isAuthMiddleware.js";
+
 export default {
   data() {
     return {
@@ -66,7 +68,13 @@ export default {
       password: "",
     };
   },
+  created() {
+    this.loginCheck();
+  },
   methods: {
+    loginCheck() {
+      if (isLoggedIn()) this.$router.push("/main");
+    },
     async submitLogin() {
       const result = await this.$apollo
         .mutate({

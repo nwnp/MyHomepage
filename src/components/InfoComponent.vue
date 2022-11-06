@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { isAuthMiddleware } from "../functions/isAuthMiddleware.js";
+import { isLoggedIn } from "../functions/isAuthMiddleware.js";
 
 export default {
   data() {
@@ -31,11 +31,11 @@ export default {
     };
   },
   created() {
-    this.isLoggedIn();
+    this.loginCheck();
   },
   methods: {
-    isLoggedIn() {
-      if (!isAuthMiddleware()) {
+    loginCheck() {
+      if (!isLoggedIn()) {
         alert("로그인이 되어 있지 않습니다.");
         this.$router.push("/");
         return;

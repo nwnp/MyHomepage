@@ -1,4 +1,4 @@
-export const isAuthMiddleware = () => {
+export const isLoggedIn = () => {
   const cookies = document.cookie ? document.cookie : null;
   if (!cookies) return false;
 
@@ -11,6 +11,6 @@ export const isAuthMiddleware = () => {
         .split("=")[1]
     : null;
 
-  if (!cookie) return cookie;
+  if (!cookie) return false;
   return true;
 };
