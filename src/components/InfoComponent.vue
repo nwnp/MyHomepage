@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { isAuthMiddleware } from "../functions/isAuthMiddleware.js";
+
 export default {
   data() {
     return {
@@ -29,13 +31,15 @@ export default {
     };
   },
   created() {
-    this.getUserInfo();
+    this.isLoggedIn();
   },
   methods: {
-    getUserInfo() {
-      const user = JSON.parse(localStorage.getItem("user"));
-      this.email = user.email;
-      this.password = user.password;
+    isLoggedIn() {
+      if (!isAuthMiddleware()) {
+        alert("로그인이 되어 있지 않습니다.");
+        this.$router.push("/");
+        return;
+      }
     },
   },
 };

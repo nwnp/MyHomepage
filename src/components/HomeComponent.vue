@@ -58,33 +58,32 @@
 </template>
 
 <script>
-import { Query } from "@/apollo/query/query.js";
-
+import { Mutation } from "@/apollo/mutation/mutations";
 export default {
   data() {
     return {
       email: "",
       password: "",
-      id: 4,
     };
   },
-  // apollo: {
-  //   me: {
-  //     query: Query.me,
-  //     variables() {
-  //       return {
-  //         id: this.id,
-  //       };
-  //     },
-  //   },
-  // },
   methods: {
     async submitLogin() {
-      const payload = {
-        email: this.email,
-        password: this.password,
-      };
-      await this.$store.dispatch("Login", payload);
+      const result = await this.$apollo
+        .mutate({
+          mutation: Mutation.login,
+          variables: {
+            userInfo: {
+              email: this.email,
+              password: this.password,
+            },
+          },
+        })
+        .catch(() => {
+          alert("이메일 혹은 비밀번호를 다시 확인해주세요.");
+          return;
+        });
+      this.$store.dispatch("Login", result);
+      this.$router.push("/main");
     },
   },
 };

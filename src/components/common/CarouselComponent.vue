@@ -9,7 +9,7 @@
       :loop="true"
     >
       <slide class="carousel-slide">
-        <img src="../../../public/파이리.png" alt="파이리" class="image" />
+        <!-- <img src="../../../public/파이리.png" alt="파이리" class="image" /> -->
       </slide>
       <slide> Slide 2 Content </slide>
     </carousel>

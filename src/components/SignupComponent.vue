@@ -106,12 +106,10 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data.signup);
           this.clearForm();
           this.$router.push({ path: "/" });
         })
         .catch((err) => {
-          console.log(err);
           alert("가입에 실패했습니다. 다시 시도해주세요.");
           this.clearForm();
         });

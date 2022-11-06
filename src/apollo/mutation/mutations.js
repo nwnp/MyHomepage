@@ -13,4 +13,12 @@ export const Mutation = {
       }
     }
   `,
+  login: gql`
+    mutation ($userInfo: UserLoginInfo!) {
+      login(userInfo: $userInfo) {
+        accessToken
+        refreshToken
+      }
+    }
+  `,
 };
