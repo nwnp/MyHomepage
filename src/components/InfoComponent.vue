@@ -11,6 +11,7 @@
     <div class="image-wrap">
       <img class="info-profile-image" src="./파이리.png" />
     </div>
+    <button @click="logout">logout</button>
     <div class="info-description">
       <div class="name">nickname</div>
       <div class="name">{{ email }}</div>
@@ -40,6 +41,11 @@ export default {
         this.$router.push("/");
         return;
       }
+    },
+    logout() {
+      this.$store.dispatch("Logout", {
+        message: "로그아웃 할거임",
+      });
     },
   },
 };
