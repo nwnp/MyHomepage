@@ -1,4 +1,5 @@
 import { Mutation } from "@/apollo/mutation/mutations";
+import { deleteCookie } from "@/functions/deleteCookie.js";
 import jwtDecode from "jwt-decode";
 
 export default {
@@ -44,7 +45,7 @@ export default {
       date = date.toUTCString();
       const { id } = jwtDecode(accessToken);
       document.cookie = `token=${accessToken};path=/;expires=${date}`;
-      document.cookie = `userId=${id}`;
+      document.cookie = `userId=${id};path=/;expires=${date}`;
       commit("setLoginCheck", true);
       commit("setUser", {
         accessToken,
@@ -52,7 +53,9 @@ export default {
       });
     },
     async Logout({ commit }, payload) {
-      console.log(payload);
+      deleteCookie("userId");
+      deleteCookie("token");
+      commit("setLoginCheck", true);
     },
   },
 };
