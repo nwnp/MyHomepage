@@ -11,6 +11,7 @@
     <div class="image-wrap">
       <img class="info-profile-image" src="./파이리.png" />
     </div>
+    <button @click="logout">logout</button>
     <div class="info-description">
       <div class="name">nickname</div>
       <div class="name">{{ email }}</div>
@@ -22,6 +23,7 @@
 
 <script>
 import { isLoggedIn } from "../functions/isAuthMiddleware.js";
+import { getCookie } from "../functions/getCookie.js";
 
 export default {
   data() {
@@ -40,6 +42,18 @@ export default {
         this.$router.push("/");
         return;
       }
+    },
+    async logout() {
+      await this.$store.dispatch("Logout", {
+        id: parseInt(getCookie()),
+        apollo: this.$apollo,
+      });
+      const result = await this.$store.getters.loginCheck;
+      if (!result) {
+        alert("로그아웃에 실패했습니다.");
+        return;
+      }
+      alert("로그아웃에 성공했습니다.");
     },
   },
 };

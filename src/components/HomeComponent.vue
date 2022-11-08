@@ -58,7 +58,6 @@
 </template>
 
 <script>
-import { Mutation } from "@/apollo/mutation/mutations";
 import { isLoggedIn } from "../functions/isAuthMiddleware.js";
 
 export default {
@@ -76,22 +75,25 @@ export default {
       if (isLoggedIn()) this.$router.push("/main");
     },
     async submitLogin() {
-      const result = await this.$apollo
-        .mutate({
-          mutation: Mutation.login,
-          variables: {
-            userInfo: {
-              email: this.email,
-              password: this.password,
-            },
-          },
-        })
-        .catch(() => {
-          alert("이메일 혹은 비밀번호를 다시 확인해주세요.");
-          return;
-        });
-      this.$store.dispatch("Login", result);
-      this.$router.push("/main");
+      await this.$store.dispatch("Login", {
+        apollo: this.$apollo,
+        user: {
+          email: this.email,
+          password: this.password,
+        },
+      });
+      const loginCheck = await this.$store.getters.loginCheck;
+      if (!loginCheck) {
+        alert("이메일 혹은 비밀번호를 다시 확인해주세요.");
+        this.clearForm();
+        return;
+      }
+      alert("로그인에 성공했습니다.");
+      this.$router.push({ path: "/main" });
+    },
+    clearForm() {
+      this.email = "";
+      this.password = "";
     },
   },
 };

@@ -17,7 +17,6 @@ export const Mutation = {
     mutation ($userInfo: UserLoginInfo!) {
       login(userInfo: $userInfo) {
         accessToken
-        refreshToken
       }
     }
   `,
