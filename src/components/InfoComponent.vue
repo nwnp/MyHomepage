@@ -2,20 +2,25 @@
   <div class="info-wrap">
     <div class="view-count">
       <div class="view-total-count">
-        <p>total 3000</p>
+        <p>TOTAL 3000</p>
       </div>
       <div class="view-today-count">
-        <p>today 32</p>
+        <p>TODAY 32</p>
       </div>
     </div>
     <div class="image-wrap">
       <img class="info-profile-image" src="./파이리.png" />
     </div>
-    <button @click="logout">logout</button>
+    <button @click="logout">LOGOUT</button>
     <div class="info-description">
-      <div class="name">nickname</div>
-      <div class="name">{{ email }}</div>
-      <div class="name">blog</div>
+      <div class="name">
+        nickname: {{ me.nickname ? me.nickname : "NO NICKNAME" }}
+      </div>
+      <div class="name">email: {{ me.email }}</div>
+      <div class="name">
+        Github:
+        {{ me.githubUrl ? me.githubUrl : "NOTHING URL" }}
+      </div>
     </div>
     <div class="info-today-graph"></div>
   </div>
@@ -24,16 +29,24 @@
 <script>
 import { getCookie } from "@/functions/getCookie.js";
 import { isLoggedIn } from "../functions/isAuthMiddleware.js";
+import { Query } from "@/apollo/query/query.js";
 
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      me: "",
     };
   },
   created() {
     this.loginCheck();
+  },
+  apollo: {
+    me: {
+      query: Query.me,
+      variables() {
+        return { id: getCookie() };
+      },
+    },
   },
   methods: {
     loginCheck() {
@@ -59,24 +72,51 @@ export default {
   display: flex;
   flex-direction: column;
   width: 260px;
-  height: 100%;
+  height: 100vh;
   border-radius: 8px;
-  background-color: #ffffff;
+  background-color: #e6e3e3;
+  padding: 10px;
+  margin: 10px;
+  align-items: center;
 }
 
 .view-count {
   display: flex;
+  width: 100%;
+  justify-content: space-around;
 }
 
 .image-wrap {
+  width: 250px;
+  height: 250px;
   display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100px;
 }
 
 .info-profile-image {
-  border-radius: 50%;
-  width: 100px;
+  border-radius: 40px;
+  width: 250px;
+  height: 250px;
+}
+
+.info-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  cursor: pointer;
+  width: 100%;
+  border-radius: 15px;
+  height: 35px;
+  background-color: #3498db;
+  color: white;
+  margin-top: 1em;
+  border: none;
+  transition: all, 0.5s;
+}
+
+button:hover {
+  background-color: #60b6f0;
 }
 </style>

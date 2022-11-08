@@ -14,10 +14,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.container {
-  height: 100%;
-  display: flex;
-  margin: 10px;
-}
-</style>
+<style scoped></style>
