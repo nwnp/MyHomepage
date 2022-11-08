@@ -22,8 +22,8 @@
 </template>
 
 <script>
+import { getCookie } from "@/functions/getCookie.js";
 import { isLoggedIn } from "../functions/isAuthMiddleware.js";
-import { getCookie } from "../functions/getCookie.js";
 
 export default {
   data() {
@@ -44,16 +44,11 @@ export default {
       }
     },
     async logout() {
-      await this.$store.dispatch("Logout", {
-        id: parseInt(getCookie()),
-        apollo: this.$apollo,
-      });
-      const result = await this.$store.getters.loginCheck;
-      if (!result) {
-        alert("로그아웃에 실패했습니다.");
-        return;
+      const result = confirm("로그아웃 하시겠습니까?");
+      if (result) {
+        await this.$store.dispatch("Logout", { userId: getCookie() });
       }
-      alert("로그아웃에 성공했습니다.");
+      this.$router.push({ path: "/" });
     },
   },
 };
