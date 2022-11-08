@@ -7,7 +7,7 @@ export default {
       token: "",
       userId: "",
     },
-    loginCheck: false,
+    loginCheck: "",
   },
   getters: {
     getUser: (state) => state.user,
@@ -39,10 +39,9 @@ export default {
         return;
       }
 
-      const { accessToken, refreshToken } = token.data.login;
+      const { accessToken } = token.data.login;
       let date = new Date(Date.now() + 7200e3);
       date = date.toUTCString();
-      sessionStorage.setItem("refreshToken", refreshToken);
       const { id } = jwtDecode(accessToken);
       document.cookie = `token=${accessToken};path=/;expires=${date}`;
       document.cookie = `userId=${id}`;

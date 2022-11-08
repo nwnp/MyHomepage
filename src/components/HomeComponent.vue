@@ -58,7 +58,6 @@
 </template>
 
 <script>
-import { Mutation } from "@/apollo/mutation/mutations";
 import { isLoggedIn } from "../functions/isAuthMiddleware.js";
 
 export default {

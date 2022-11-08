@@ -23,6 +23,7 @@
 
 <script>
 import { isLoggedIn } from "../functions/isAuthMiddleware.js";
+import { getCookie } from "../functions/getCookie.js";
 
 export default {
   data() {
@@ -42,10 +43,17 @@ export default {
         return;
       }
     },
-    logout() {
-      this.$store.dispatch("Logout", {
-        message: "로그아웃 할거임",
+    async logout() {
+      await this.$store.dispatch("Logout", {
+        id: parseInt(getCookie()),
+        apollo: this.$apollo,
       });
+      const result = await this.$store.getters.loginCheck;
+      if (!result) {
+        alert("로그아웃에 실패했습니다.");
+        return;
+      }
+      alert("로그아웃에 성공했습니다.");
     },
   },
 };
