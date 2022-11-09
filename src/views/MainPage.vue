@@ -7,7 +7,8 @@
       <BgmComponent />
       <DashboardComponent />
     </div>
-    <div>
+    <div class="banner">
+      <SearchComponent />
       <BannerComponent />
     </div>
   </div>
@@ -18,6 +19,7 @@ import InfoComponent from "@/components/InfoComponent.vue";
 import DashboardComponent from "@/components/DashboardComponent.vue";
 import BgmComponent from "@/components/BgmComponent.vue";
 import BannerComponent from "@/components/BannerComponent.vue";
+import SearchComponent from "@/components/SearchComponent.vue";
 
 export default {
   components: {
@@ -25,6 +27,7 @@ export default {
     DashboardComponent,
     BgmComponent,
     BannerComponent,
+    SearchComponent,
   },
 };
 </script>
@@ -37,8 +40,14 @@ export default {
 .dashboard {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin-left: 10px;
+  width: 1300px;
+  padding: 10px 0px;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0px;
+  width: 10%;
 }
 </style>

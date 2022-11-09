@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-wrap">
-    <div>{{ me.nickname }}님의 미니홈피입니다.</div>
+    <div class="dashboard-nickname">{{ me.nickname }}님의 미니홈피입니다.</div>
     <div class="dashboard-content">
       <div class="content-post">게시글</div>
       <div class="content-calendar">캘린더</div>
@@ -35,10 +35,13 @@ export default {
   display: flex;
   background-color: #c4c4c4;
   width: 100%;
-  height: 92.5%;
-  border-radius: 8px 0px 0px 8px;
-  margin: 0px 5px;
+  height: 100%;
+  border-radius: 8px 0px 8px 8px;
   flex-direction: column;
+}
+
+.dashboard-nickname {
+  height: 3%;
 }
 
 .dashboard-content {

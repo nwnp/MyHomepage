@@ -1,5 +1,7 @@
 <template>
-  <div class="bgm-wrap">BGM</div>
+  <div class="bgm-wrap">
+    <div class="playlist">playlist</div>
+  </div>
 </template>
 
 <script>
@@ -13,11 +15,14 @@ export default {
 <style scoped>
 .bgm-wrap {
   display: flex;
-  margin: 10px 0px;
   background-color: #c4c4c4;
-  width: 100vh;
+  width: 100%;
   height: 25px;
   border-radius: 8px;
-  padding: 0px 7px;
+  margin-bottom: 10px;
+}
+
+.playlist {
+  margin-left: 10px;
 }
 </style>
