@@ -14,11 +14,15 @@
     <button @click="logout">LOGOUT</button>
     <div class="info-description">
       <div class="name">
-        nickname: {{ me.nickname ? me.nickname : "NO NICKNAME" }}
+        <i class="fa-solid fa-person"></i>
+        {{ me.nickname ? me.nickname : "NO NICKNAME" }}
       </div>
-      <div class="name">email: {{ me.email }}</div>
       <div class="name">
-        Github:
+        <i class="fa-solid fa-paper-plane"></i>
+        {{ me.email }}
+      </div>
+      <div class="name">
+        <i class="fa-brands fa-github"></i>
         {{ me.githubUrl ? me.githubUrl : "NOTHING URL" }}
       </div>
     </div>
@@ -42,7 +46,7 @@ export default {
   },
   apollo: {
     me: {
-      query: Query.me,
+      query: Query.meForInfo,
       variables() {
         return { id: getCookie() };
       },
@@ -101,7 +105,24 @@ export default {
 .info-description {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  justify-items: center;
+  margin-top: 10px;
+}
+
+.name {
+  display: flex;
+  padding-left: 10px;
+  gap: 30px;
+  margin-bottom: 5px;
   align-items: center;
+}
+
+i {
+  display: flex;
+  font-size: 1em;
+  width: 15px;
+  justify-content: center;
 }
 
 button {

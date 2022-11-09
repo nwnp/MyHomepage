@@ -165,7 +165,7 @@ i {
 
 .socials {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   column-gap: 1em;
 }
 
