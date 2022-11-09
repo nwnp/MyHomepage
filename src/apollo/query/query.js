@@ -11,4 +11,11 @@ export const Query = {
       }
     }
   `,
+  meForDashboard: gql`
+    query ($id: ID!) {
+      me(id: $id) {
+        nickname
+      }
+    }
+  `,
 };

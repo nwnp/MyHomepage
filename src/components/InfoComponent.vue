@@ -78,9 +78,9 @@ export default {
   display: flex;
   flex-direction: column;
   width: 260px;
-  height: 100vh;
+  height: 95vh;
   border-radius: 8px;
-  background-color: #e6e3e3;
+  background-color: #c4c4c4;
   padding: 10px;
   margin: 10px;
   align-items: center;
