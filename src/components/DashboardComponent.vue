@@ -33,7 +33,7 @@ export default {
 <style scoped>
 .dashboard-wrap {
   display: flex;
-  background-color: #c4c4c4;
+  background-color: white;
   width: 100%;
   height: 100%;
   border-radius: 8px 0px 8px 8px;

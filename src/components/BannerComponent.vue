@@ -20,7 +20,7 @@ export default {
 .banner-wrap {
   list-style: none;
   padding-left: 0px;
-  background-color: #c4c4c4;
+  background-color: white;
   height: 58.5%;
   margin: 0px 5px 0px 0px;
   border-radius: 0px 8px 8px 0px;

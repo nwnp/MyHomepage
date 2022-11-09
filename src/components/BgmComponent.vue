@@ -15,7 +15,7 @@ export default {
 <style scoped>
 .bgm-wrap {
   display: flex;
-  background-color: #c4c4c4;
+  background-color: white;
   width: 100%;
   height: 25px;
   border-radius: 8px;

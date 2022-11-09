@@ -80,7 +80,7 @@ export default {
   width: 260px;
   height: 95vh;
   border-radius: 8px;
-  background-color: #c4c4c4;
+  background-color: white;
   padding: 10px;
   margin: 10px;
   align-items: center;
