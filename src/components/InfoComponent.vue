@@ -23,7 +23,9 @@
       </div>
       <div class="name">
         <i class="fa-brands fa-github"></i>
-        {{ me.githubUrl ? me.githubUrl : "NOTHING URL" }}
+        <a :href="me.githubUrl ? me.githubUrl : '/main'">
+          {{ me.githubUrl ? me.githubUrl : "NOTHING URL" }}
+        </a>
       </div>
     </div>
     <div class="info-today-graph"></div>
@@ -123,6 +125,11 @@ i {
   font-size: 1em;
   width: 15px;
   justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 button {
