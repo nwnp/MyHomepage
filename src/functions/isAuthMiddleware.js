@@ -4,10 +4,10 @@ export const isLoggedIn = () => {
 
   const cookie = cookies
     .split("; ")
-    .find((cookie) => cookie.startsWith("token"))
+    .find((cookie) => cookie.startsWith("userId"))
     ? cookies
         .split("; ")
-        .find((cookie) => cookie.startsWith("token"))
+        .find((cookie) => cookie.startsWith("userId"))
         .split("=")[1]
     : null;
 

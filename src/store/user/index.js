@@ -44,8 +44,8 @@ export default {
       let date = new Date(Date.now() + 7200e3);
       date = date.toUTCString();
       const { id } = jwtDecode(accessToken);
-      document.cookie = `token=${accessToken};path=/;expires=${date}`;
-      document.cookie = `userId=${id};path=/;expires=${date}`;
+      localStorage.setItem("access-token", accessToken); // cookie - userId
+      document.cookie = `userId=${id};path=/;expires=${date}`; // localStorage - access token
       commit("setLoginCheck", true);
       commit("setUser", {
         accessToken,
