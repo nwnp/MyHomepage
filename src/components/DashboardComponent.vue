@@ -25,7 +25,7 @@ export default {
     me: {
       query: Query.meForDashboard,
       variables() {
-        return { id: parseInt(getCookie()) };
+        return { id: parseInt(getCookie("userId")) };
       },
     },
   },

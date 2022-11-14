@@ -50,7 +50,7 @@ export default {
     me: {
       query: Query.meForInfo,
       variables() {
-        return { id: getCookie() };
+        return { id: getCookie("userId") };
       },
     },
   },
@@ -65,7 +65,7 @@ export default {
     async logout() {
       const result = confirm("로그아웃 하시겠습니까?");
       if (result) {
-        await this.$store.dispatch("Logout", { userId: getCookie() });
+        await this.$store.dispatch("Logout", { userId: getCookie("userId") });
       }
       this.$router.push({ path: "/" });
     },

@@ -44,8 +44,8 @@ export default {
       let date = new Date(Date.now() + 7200e3);
       date = date.toUTCString();
       const { id } = jwtDecode(accessToken);
-      localStorage.setItem("access-token", accessToken); // cookie - userId
-      document.cookie = `userId=${id};path=/;expires=${date}`; // localStorage - access token
+      document.cookie = `userId=${id};path=/;expires=${date}`;
+      document.cookie = `token=${accessToken};path=/;expires=${date}`;
       commit("setLoginCheck", true);
       commit("setUser", {
         accessToken,
@@ -55,7 +55,7 @@ export default {
     async Logout({ commit }, payload) {
       deleteCookie("userId");
       deleteCookie("token");
-      commit("setLoginCheck", true);
+      commit("setLoginCheck", false);
     },
   },
 };

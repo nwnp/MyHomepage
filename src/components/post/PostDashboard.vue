@@ -37,7 +37,7 @@ export default {
       query: Query.meForDashboard,
       variables() {
         return {
-          id: parseInt(getCookie()),
+          id: parseInt(getCookie("userId")),
         };
       },
     },
@@ -45,7 +45,7 @@ export default {
       query: Query.postForDashboard,
       variables() {
         return {
-          id: getCookie(),
+          id: getCookie("userId"),
         };
       },
     },
