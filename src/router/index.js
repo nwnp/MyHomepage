@@ -19,6 +19,10 @@ const routes = [
     component: () => import("@/views/SignupView.vue"),
   },
   {
+    path: "/post",
+    component: () => import("@/views/PostView.vue"),
+  },
+  {
     path: "*",
     component: () => import("../views/NotFound.vue"),
   },

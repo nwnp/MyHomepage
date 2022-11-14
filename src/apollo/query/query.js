@@ -18,4 +18,14 @@ export const Query = {
       }
     }
   `,
+  postForDashboard: gql`
+    query Posts($id: ID!) {
+      getPostsByUserId(id: $id) {
+        id
+        title
+        content
+        imageUrl
+      }
+    }
+  `,
 };
