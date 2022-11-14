@@ -23,13 +23,19 @@ export default {
 
 <style scoped>
 .banner-wrap {
+  padding-top: 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: white;
+  background-color: #2c3e50;
   height: 58.5%;
   margin: 0px 5px 0px 0px;
-  border-radius: 0px 8px 8px 0px;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .banner-router {
@@ -39,15 +45,15 @@ export default {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.7s;
+  transition: all 0.2s;
+  color: black;
 }
 
 .banner-router:hover {
-  font-size: 23px;
-}
-
-a {
-  text-decoration: none;
+  font-size: 22px;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.4);
+  background-color: white;
   color: black;
+  border-radius: 0px 8px 8px 0px;
 }
 </style>

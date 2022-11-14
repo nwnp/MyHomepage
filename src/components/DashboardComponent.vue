@@ -38,7 +38,7 @@ export default {
   background-color: white;
   width: 100%;
   height: 100%;
-  border-radius: 8px 0px 8px 8px;
+  border-radius: 8px;
   flex-direction: column;
 }
 
