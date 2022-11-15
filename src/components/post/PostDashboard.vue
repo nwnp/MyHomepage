@@ -6,8 +6,16 @@
     <div class="dashboard-content">
       <div v-for="(post, id) in getPostsByUserId" :key="id" class="post-wrap">
         <div class="button-wrap">
-          <button style="background-color: #c9b54f"></button>
-          <button style="background-color: red"></button>
+          <button
+            style="background-color: #fcf19a"
+            title="수정"
+            @click="updateOrDeletePost(id, 'UPDATE')"
+          ></button>
+          <button
+            style="background-color: red"
+            title="삭제"
+            @click="updateOrDeletePost(id, 'DELETE')"
+          ></button>
         </div>
         <div class="card-wrap">
           <div class="post-title">
@@ -19,17 +27,34 @@
         </div>
       </div>
     </div>
+    <PostModal
+      v-if="modalCheck"
+      class="modal"
+      :postInfo="postInfo"
+      @closeModal="modalCheck = !modalCheck"
+    />
   </div>
 </template>
 
 <script>
 import { Query } from "@/apollo/query/query.js";
 import { getCookie } from "@/functions/getCookie.js";
+import PostModal from "@/components/modal/post/PostUpdateModal.vue";
+
 export default {
+  components: {
+    PostModal,
+  },
   data() {
     return {
       me: "",
       getPostsByUserId: "",
+      modalCheck: false,
+      postInfo: {
+        modalType: "",
+        title: "",
+        content: "",
+      },
     };
   },
   apollo: {
@@ -48,6 +73,19 @@ export default {
           id: getCookie("userId"),
         };
       },
+    },
+  },
+  methods: {
+    updateOrDeletePost(id, type) {
+      this.postInfo = {
+        modalType: type,
+        title: this.getPostsByUserId[id].title,
+        content: this.getPostsByUserId[id].content,
+      };
+      this.modalCheck = !this.modalCheck;
+    },
+    closeModal() {
+      this.modal = false;
     },
   },
 };
@@ -142,5 +180,14 @@ button {
 button:hover {
   background-color: white;
   color: black;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 </style>
