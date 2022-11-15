@@ -39,7 +39,7 @@
 <script>
 import { Query } from "@/apollo/query/query.js";
 import { getCookie } from "@/functions/getCookie.js";
-import PostModal from "@/components/modal/post/PostUpdateModal.vue";
+import PostModal from "@/components/modal/post/PostModal.vue";
 
 export default {
   components: {
@@ -188,6 +188,6 @@ button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 </style>
