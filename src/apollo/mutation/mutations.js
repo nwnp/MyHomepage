@@ -20,4 +20,14 @@ export const Mutation = {
       }
     }
   `,
+  updatePost: gql`
+    mutation ($post: Update!) {
+      updatePost(post: $post)
+    }
+  `,
+  deletePost: gql`
+    mutation ($id: ID!) {
+      deletePost(id: $id)
+    }
+  `,
 };

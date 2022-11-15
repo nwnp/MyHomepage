@@ -32,6 +32,8 @@
       class="modal"
       :postInfo="postInfo"
       @closeModal="modalCheck = !modalCheck"
+      @updateSuccess="success"
+      @deleteSuccess="success"
     />
   </div>
 </template>
@@ -39,7 +41,7 @@
 <script>
 import { Query } from "@/apollo/query/query.js";
 import { getCookie } from "@/functions/getCookie.js";
-import PostModal from "@/components/modal/post/PostUpdateModal.vue";
+import PostModal from "@/components/modal/post/PostModal.vue";
 
 export default {
   components: {
@@ -54,6 +56,7 @@ export default {
         modalType: "",
         title: "",
         content: "",
+        PostId: "",
       },
     };
   },
@@ -81,11 +84,16 @@ export default {
         modalType: type,
         title: this.getPostsByUserId[id].title,
         content: this.getPostsByUserId[id].content,
+        PostId: this.getPostsByUserId[id].id,
       };
       this.modalCheck = !this.modalCheck;
     },
     closeModal() {
       this.modal = false;
+    },
+    success() {
+      this.modal = false;
+      this.$router.go();
     },
   },
 };
@@ -188,6 +196,6 @@ button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 </style>
