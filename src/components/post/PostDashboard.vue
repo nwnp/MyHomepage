@@ -32,6 +32,7 @@
       class="modal"
       :postInfo="postInfo"
       @closeModal="modalCheck = !modalCheck"
+      @updateSuccess="success"
     />
   </div>
 </template>
@@ -54,6 +55,7 @@ export default {
         modalType: "",
         title: "",
         content: "",
+        PostId: "",
       },
     };
   },
@@ -81,11 +83,16 @@ export default {
         modalType: type,
         title: this.getPostsByUserId[id].title,
         content: this.getPostsByUserId[id].content,
+        PostId: this.getPostsByUserId[id].id,
       };
       this.modalCheck = !this.modalCheck;
     },
     closeModal() {
       this.modal = false;
+    },
+    success() {
+      this.modal = false;
+      this.$router.go();
     },
   },
 };

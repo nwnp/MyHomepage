@@ -54,14 +54,35 @@ export default {
     return {
       title: this.postInfo.title,
       content: this.postInfo.content,
+      PostId: this.postInfo.PostId,
     };
   },
   methods: {
     close() {
       this.$emit("closeModal");
     },
-    updatePost() {
-      console.log("update button clicked");
+    async updatePost() {
+      if (
+        this.title === this.postInfo.title &&
+        this.content === this.postInfo.content
+      ) {
+        return alert("변경사항이 없습니다.");
+      }
+
+      if (!confirm("게시글을 수정하시겠습니까?")) return;
+
+      await this.$store.dispatch("updatePost", {
+        PostId: this.PostId,
+        title: this.title,
+        content: this.content,
+        apollo: this.$apollo,
+      });
+      const bool = await this.$store.getters.updateCheck;
+      if (!bool) {
+        return alert("등록에 실패했습니다. 다시 시도해주세요");
+      }
+      alert("게시글을 성공적으로 수정했습니다.");
+      this.$emit("updateSuccess");
     },
     deletePost() {
       console.log("delete button clicked");
