@@ -31,12 +31,10 @@
       <div class="header-bar">
         <button class="cancel-button" @click="close"></button>
       </div>
-      <form @submit.prevent="deletePost">
+      <form @submit.prevent="deletePost" class="form">
+        <div class="modal-title">{{ postInfo.modalType }} POST</div>
         <div class="intro">게시글을 영구히 삭제하시겠습니까?</div>
-        <div>{{ postInfo.modalType }} POST</div>
-        <div>{{ postInfo.title }}</div>
-        <div>{{ postInfo.content }}</div>
-        <button>delete</button>
+        <button class="delete-btn">DELETE</button>
       </form>
     </div>
   </div>
@@ -84,8 +82,16 @@ export default {
       alert("게시글을 성공적으로 수정했습니다.");
       this.$emit("updateSuccess");
     },
-    deletePost() {
-      console.log("delete button clicked");
+    async deletePost() {
+      if (!confirm("삭제하시겠습니까?")) return;
+      await this.$store.dispatch("deletePost", {
+        PostId: this.PostId,
+        apollo: this.$apollo,
+      });
+      const bool = await this.$store.getters.deleteCheck;
+      if (!bool) return alert("게시글 삭제에 실패했습니다. 다시 시도해주세요.");
+      alert("게시글을 성공적으로 삭제했습니다.");
+      this.$emit("deleteSuccess");
     },
   },
 };
@@ -178,5 +184,31 @@ export default {
   background-color: red;
   border: none;
   cursor: pointer;
+}
+
+.intro {
+  text-align: center;
+  font-size: 20px;
+}
+
+.delete-title {
+  width: 100%;
+  text-align: center;
+}
+
+.delete-btn {
+  cursor: pointer;
+  width: 100%;
+  border-radius: 15px;
+  height: 35px;
+  background-color: #3498db;
+  color: white;
+  margin-top: 1em;
+  border: none;
+  transition: all, 0.5s;
+}
+
+.delete-btn:hover {
+  background-color: #60b6f0;
 }
 </style>

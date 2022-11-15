@@ -33,6 +33,7 @@
       :postInfo="postInfo"
       @closeModal="modalCheck = !modalCheck"
       @updateSuccess="success"
+      @deleteSuccess="success"
     />
   </div>
 </template>

@@ -25,4 +25,9 @@ export const Mutation = {
       updatePost(post: $post)
     }
   `,
+  deletePost: gql`
+    mutation ($id: ID!) {
+      deletePost(id: $id)
+    }
+  `,
 };
