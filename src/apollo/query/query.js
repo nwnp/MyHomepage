@@ -38,6 +38,7 @@ export const Query = {
           content
         }
         user {
+          id
           email
           nickname
         }
