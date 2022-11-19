@@ -7,11 +7,14 @@
       <h1>POST DETAIL</h1>
       <div>{{ getPostWithComment[0].post.title }}</div>
       <div>{{ getPostWithComment[0].post.content }}</div>
-      <ul>
-        <li v-for="comment in getPostWithComment" :key="comment">
-          {{ comment.post_comment }}
-        </li>
-      </ul>
+      <div
+        v-for="comment in getPostWithComment"
+        :key="comment"
+        class="comment-list"
+      >
+        <div>{{ comment.user.nickname }}({{ comment.user.email }}):</div>
+        <div>{{ comment.post_comment }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -58,5 +61,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.comment-list {
+  display: flex;
+  gap: 10px;
 }
 </style>
