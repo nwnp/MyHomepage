@@ -17,7 +17,7 @@
             @click="updateOrDeletePost(id, 'DELETE')"
           ></button>
         </div>
-        <div class="card-wrap">
+        <div class="card-wrap" @click="detailPost(id)">
           <div class="post-title">
             {{ post.title }}
           </div>
@@ -28,12 +28,18 @@
       </div>
     </div>
     <PostModal
-      v-if="modalCheck"
+      v-if="editModalCheck"
       class="modal"
       :postInfo="postInfo"
-      @closeModal="modalCheck = !modalCheck"
+      @closeModal="editModalCheck = !editModalCheck"
       @updateSuccess="success"
       @deleteSuccess="success"
+    />
+    <PostDetailModal
+      v-if="detailModalCheck"
+      class="modal"
+      :postId="postInfo.PostId"
+      @closeModal="detailModalCheck = !detailModalCheck"
     />
   </div>
 </template>
@@ -42,16 +48,19 @@
 import { Query } from "@/apollo/query/query.js";
 import { getCookie } from "@/functions/getCookie.js";
 import PostModal from "@/components/modal/post/PostModal.vue";
+import PostDetailModal from "@/components/modal/post/PostDetailModal.vue";
 
 export default {
   components: {
     PostModal,
+    PostDetailModal,
   },
   data() {
     return {
       me: "",
       getPostsByUserId: "",
-      modalCheck: false,
+      editModalCheck: false,
+      detailModalCheck: false,
       postInfo: {
         modalType: "",
         title: "",
@@ -86,13 +95,13 @@ export default {
         content: this.getPostsByUserId[id].content,
         PostId: this.getPostsByUserId[id].id,
       };
-      this.modalCheck = !this.modalCheck;
+      this.editModalCheck = !this.editModalCheck;
     },
-    closeModal() {
-      this.modal = false;
+    detailPost(id) {
+      this.postInfo.PostId = this.getPostsByUserId[id].id;
+      this.detailModalCheck = !this.detailModalCheck;
     },
     success() {
-      this.modal = false;
       this.$router.go();
     },
   },

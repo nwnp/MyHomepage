@@ -28,4 +28,20 @@ export const Query = {
       }
     }
   `,
+  getPostWithComment: gql`
+    query ($info: PostCommentInfo!) {
+      getPostWithComment(info: $info) {
+        id
+        post_comment
+        post {
+          title
+          content
+        }
+        user {
+          email
+          nickname
+        }
+      }
+    }
+  `,
 };
