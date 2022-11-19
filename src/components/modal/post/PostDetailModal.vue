@@ -8,12 +8,12 @@
       <div class="post-title-wrap">
         <div class="post-subtitle">TITLE</div>
         <div class="post-title">
-          {{ getPostWithComment[0].post.title }}
+          {{ postInfo.title }}
         </div>
       </div>
       <div class="post-content-wrap">
         <div class="post-content">
-          {{ getPostWithComment[0].post.content }}
+          {{ postInfo.content }}
         </div>
       </div>
       <form @submit.prevent="registerComment">
@@ -53,7 +53,12 @@ import { Query } from "@/apollo/query/query";
 import { getCookie } from "@/functions/getCookie";
 
 export default {
-  props: ["postId"],
+  props: {
+    postInfo: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       getPostWithComment: "",
@@ -68,7 +73,7 @@ export default {
         return {
           info: {
             UserId: getCookie("userId"),
-            PostId: this.postId,
+            PostId: this.postInfo.PostId,
           },
         };
       },

@@ -38,7 +38,7 @@
     <PostDetailModal
       v-if="detailModalCheck"
       class="modal"
-      :postId="postInfo.PostId"
+      :postInfo="postInfo"
       @closeModal="detailModalCheck = !detailModalCheck"
     />
   </div>
@@ -89,20 +89,31 @@ export default {
   },
   methods: {
     updateOrDeletePost(id, type) {
-      this.postInfo = {
-        modalType: type,
-        title: this.getPostsByUserId[id].title,
-        content: this.getPostsByUserId[id].content,
-        PostId: this.getPostsByUserId[id].id,
-      };
+      this.postInfoSetup(id, type);
       this.editModalCheck = !this.editModalCheck;
     },
     detailPost(id) {
-      this.postInfo.PostId = this.getPostsByUserId[id].id;
+      this.postInfoSetup(id, "DETAIL");
       this.detailModalCheck = !this.detailModalCheck;
     },
     success() {
       this.$router.go();
+    },
+    postInfoSetup(id, type) {
+      if (type === "DETAIL") {
+        this.postInfo = {
+          title: this.getPostsByUserId[id].title,
+          content: this.getPostsByUserId[id].content,
+          PostId: this.getPostsByUserId[id].id,
+        };
+      } else {
+        this.postInfo = {
+          modalType: type,
+          title: this.getPostsByUserId[id].title,
+          content: this.getPostsByUserId[id].content,
+          PostId: this.getPostsByUserId[id].id,
+        };
+      }
     },
   },
 };
