@@ -35,4 +35,9 @@ export const Mutation = {
       registerPostComment(post: $post)
     }
   `,
+  deletePostComment: gql`
+    mutation ($post: PostCommentDelete!) {
+      deletePostComment(post: $post)
+    }
+  `,
 };

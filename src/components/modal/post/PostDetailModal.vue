@@ -39,8 +39,8 @@
               <div class="comment-email">({{ comment.user.email }})</div>
             </div>
             <div v-if="comment.user.id === me" class="edit-btn-wrap">
-              <button @click="updateComment">수정하기</button>
-              <button @click="deleteComment">삭제하기</button>
+              <button @click="updateComment(comment.id)">수정하기</button>
+              <button @click="deleteComment(comment.id)">삭제하기</button>
             </div>
           </div>
           <div class="comment-bottom">{{ comment.post_comment }}</div>
@@ -89,7 +89,7 @@ export default {
         comment: this.inputValue,
       };
       await this.$store.dispatch("registerPostComment", payload);
-      const result = await this.$store.getters.postCommentCheck;
+      const result = await this.$store.getters.postCommentRegisterCheck;
       if (!result)
         return alert("댓글 등록에 실패했습니다. 다시 시도해주세요 🙏");
       else {
@@ -98,11 +98,22 @@ export default {
         this.$router.go();
       }
     },
-    updateComment() {
-      console.log("update btn clicked!!");
-    },
-    deleteComment() {
-      console.log("delete btn clicked!!");
+    updateComment(commentId) {},
+    async deleteComment(commentId) {
+      const payload = {
+        apollo: this.$apollo,
+        PostId: this.postInfo.PostId,
+        UserId: getCookie("userId"),
+        commentId,
+      };
+      await this.$store.dispatch("deletePostComment", payload);
+      const result = await this.$store.getters.postCommentDeleteCheck;
+      if (!result)
+        return alert("댓글 삭제를 실패했습니다. 다시 시도해주세요 🙏");
+      else {
+        alert("댓글 삭제가 완료되었습니다 😀");
+        this.$router.go();
+      }
     },
   },
 };
