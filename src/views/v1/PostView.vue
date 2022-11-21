@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import InfoComponent from "@/components/InfoComponent.vue";
-import PostDashboard from "@/components/post/PostDashboard.vue";
-import BgmComponent from "@/components/BgmComponent.vue";
-import BannerComponent from "@/components/BannerComponent.vue";
-import SearchComponent from "@/components/SearchComponent.vue";
+import InfoComponent from "@/components/v1/InfoComponent.vue";
+import PostDashboard from "@/components/v1/post/PostDashboard.vue";
+import BgmComponent from "@/components/v1/BgmComponent.vue";
+import BannerComponent from "@/components/v1/BannerComponent.vue";
+import SearchComponent from "@/components/v1/SearchComponent.vue";
 
 export default {
   components: {
