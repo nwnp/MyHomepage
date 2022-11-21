@@ -5,10 +5,12 @@ export default {
   state: {
     updateCheck: false,
     deleteCheck: false,
+    postCommentCheck: false,
   },
   getters: {
     updateCheck: (state) => state.updateCheck,
     deleteCheck: (state) => state.deleteCheck,
+    postCommentCheck: (state) => state.postCommentCheck,
   },
   mutations: {
     setUpdateCheck(state, bool) {
@@ -16,6 +18,9 @@ export default {
     },
     setDeleteCheck(state, bool) {
       state.deleteCheck = bool;
+    },
+    setPostCommentCheck(state, bool) {
+      state.postCommentCheck = bool;
     },
   },
   actions: {
@@ -56,6 +61,27 @@ export default {
         return;
       }
       commit("setDeleteCheck", result.data.deletePost);
+    },
+
+    async registerPostComment({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.registerPostComment,
+          variables: {
+            post: {
+              UserId: getCookie("userId"),
+              PostId: payload.PostId,
+              comment: payload.comment,
+            },
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        console.log(result);
+        commit("setPostCommentCheck", result.data.registerPostComment);
+      }
     },
   },
 };

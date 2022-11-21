@@ -5,44 +5,46 @@
         <button @click="$emit('closeModal')" class="cancel-btn"></button>
       </div>
       <h1>POST DETAIL</h1>
-      <div class="post-title-wrap">
-        <div class="post-subtitle">TITLE</div>
-        <div class="post-title">
-          {{ postInfo.title }}
-        </div>
-      </div>
-      <div class="post-content-wrap">
-        <div class="post-content">
-          {{ postInfo.content }}
-        </div>
-      </div>
-      <form @submit.prevent="registerComment">
-        <input
-          type="text"
-          id="register-comment"
-          class="comment-input"
-          placeholder="댓글 달기"
-          v-model="inputValue"
-        />
-        <label for="register-comment"></label>
-        <button type="submit" class="comment-btn">등록하기</button>
-      </form>
-      <div
-        v-for="(comment, id) in getPostWithComment"
-        :key="(comment, id)"
-        class="comment-wrap"
-      >
-        <div class="comment-top">
-          <div class="comment-top-wrap">
-            <div class="comment-nickname">{{ comment.user.nickname }}</div>
-            <div class="comment-email">({{ comment.user.email }})</div>
-          </div>
-          <div v-if="comment.user.id === me" class="edit-btn-wrap">
-            <button @click="updateComment">수정하기</button>
-            <button @click="deleteComment">삭제하기</button>
+      <div style="overflow: scroll">
+        <div class="post-title-wrap">
+          <div class="post-subtitle">TITLE</div>
+          <div class="post-title">
+            {{ postInfo.title }}
           </div>
         </div>
-        <div class="comment-bottom">{{ comment.post_comment }}</div>
+        <div class="post-content-wrap">
+          <div class="post-content">
+            {{ postInfo.content }}
+          </div>
+        </div>
+        <form @submit.prevent="registerComment">
+          <input
+            type="text"
+            id="register-comment"
+            class="comment-input"
+            placeholder="댓글 달기"
+            v-model="inputValue"
+          />
+          <label for="register-comment"></label>
+          <button type="submit" class="comment-btn">등록하기</button>
+        </form>
+        <div
+          v-for="(comment, id) in getPostWithComment"
+          :key="(comment, id)"
+          class="comment-wrap"
+        >
+          <div class="comment-top">
+            <div class="comment-top-wrap">
+              <div class="comment-nickname">{{ comment.user.nickname }}</div>
+              <div class="comment-email">({{ comment.user.email }})</div>
+            </div>
+            <div v-if="comment.user.id === me" class="edit-btn-wrap">
+              <button @click="updateComment">수정하기</button>
+              <button @click="deleteComment">삭제하기</button>
+            </div>
+          </div>
+          <div class="comment-bottom">{{ comment.post_comment }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -80,9 +82,21 @@ export default {
     },
   },
   methods: {
-    registerComment() {
-      console.log(this.inputValue);
-      this.inputValue = "";
+    async registerComment() {
+      const payload = {
+        apollo: this.$apollo,
+        PostId: this.postInfo.PostId,
+        comment: this.inputValue,
+      };
+      await this.$store.dispatch("registerPostComment", payload);
+      const result = await this.$store.getters.postCommentCheck;
+      if (!result)
+        return alert("댓글 등록에 실패했습니다. 다시 시도해주세요 🙏");
+      else {
+        alert("댓글 등록에 성공했습니다 😀");
+        this.inputValue = "";
+        this.$router.go();
+      }
     },
     updateComment() {
       console.log("update btn clicked!!");
