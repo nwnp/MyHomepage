@@ -39,11 +39,22 @@
               <div class="comment-email">({{ comment.user.email }})</div>
             </div>
             <div v-if="comment.user.id === me" class="edit-btn-wrap">
-              <button @click="updateComment(comment.id)">수정하기</button>
+              <button @click="commentId = comment.id">수정하기</button>
               <button @click="deleteComment(comment.id)">삭제하기</button>
             </div>
           </div>
-          <div class="comment-bottom">{{ comment.post_comment }}</div>
+          <div v-if="commentId == comment.id" class="comment-bottom">
+            <input
+              type="text"
+              v-model="updateValue"
+              :placeholder="comment.post_comment"
+            />
+            <button @click="updateCancel">취소</button>
+            <button @click="updateComment(comment.id)">등록</button>
+          </div>
+          <div v-else class="comment-bottom">
+            {{ comment.post_comment }}
+          </div>
         </div>
       </div>
     </div>
@@ -66,6 +77,8 @@ export default {
       getPostWithComment: "",
       inputValue: "",
       me: getCookie("userId"),
+      updateValue: "",
+      commentId: "",
     };
   },
   apollo: {
@@ -98,7 +111,6 @@ export default {
         this.$router.go();
       }
     },
-    updateComment(commentId) {},
     async deleteComment(commentId) {
       const payload = {
         apollo: this.$apollo,
@@ -114,6 +126,28 @@ export default {
         alert("댓글 삭제가 완료되었습니다 😀");
         this.$router.go();
       }
+    },
+    async updateComment(commentId) {
+      console.log("comment id", commentId);
+      const payload = {
+        apollo: this.$apollo,
+        PostId: this.postInfo.PostId,
+        UserId: getCookie("userId"),
+        comment: this.updateValue,
+        commentId,
+      };
+      await this.$store.dispatch("updatePostComment", payload);
+      const result = await this.$store.getters.postCommentUpdateCheck;
+      if (!result)
+        return alert("댓글 수정을 실패했습니다. 다시 시도해주세요 🙏");
+      else {
+        alert("댓글 수정이 완료되었습니다 😀");
+        this.$router.go();
+      }
+    },
+    updateCancel() {
+      this.commentId = "";
+      this.updateValue = "";
     },
   },
 };
@@ -278,5 +312,25 @@ form {
 .comment-bottom {
   padding: 5px;
   margin-left: 20px;
+}
+
+.comment-bottom input {
+  border: none;
+  width: 330px;
+  height: 25px;
+}
+
+.comment-bottom button {
+  border: none;
+  border-radius: 10px;
+  width: 40px;
+  height: 30px;
+  margin-left: 20px;
+  background-color: white;
+  transition: all, 0.3s;
+}
+
+.comment-bottom button:hover {
+  background-color: #e0f3ff;
 }
 </style>
