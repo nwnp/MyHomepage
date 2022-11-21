@@ -30,4 +30,19 @@ export const Mutation = {
       deletePost(id: $id)
     }
   `,
+  registerPostComment: gql`
+    mutation ($post: PostCommentRegister!) {
+      registerPostComment(post: $post)
+    }
+  `,
+  deletePostComment: gql`
+    mutation ($post: PostCommentDelete!) {
+      deletePostComment(post: $post)
+    }
+  `,
+  updatePostComment: gql`
+    mutation ($post: PostCommentUpdate!) {
+      updatePostComment(post: $post)
+    }
+  `,
 };

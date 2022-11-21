@@ -5,10 +5,16 @@ export default {
   state: {
     updateCheck: false,
     deleteCheck: false,
+    postCommentRegisterCheck: false,
+    postCommentDeleteCheck: false,
+    postCommentUpdateCheck: false,
   },
   getters: {
     updateCheck: (state) => state.updateCheck,
     deleteCheck: (state) => state.deleteCheck,
+    postCommentRegisterCheck: (state) => state.postCommentRegisterCheck,
+    postCommentDeleteCheck: (state) => state.postCommentDeleteCheck,
+    postCommentUpdateCheck: (state) => state.postCommentUpdateCheck,
   },
   mutations: {
     setUpdateCheck(state, bool) {
@@ -16,6 +22,15 @@ export default {
     },
     setDeleteCheck(state, bool) {
       state.deleteCheck = bool;
+    },
+    setPostCommentRegisterCheck(state, bool) {
+      state.postCommentRegisterCheck = bool;
+    },
+    setPostCommentDeleteCheck(state, bool) {
+      state.postCommentDeleteCheck = bool;
+    },
+    setPostCommentUpdateCheck(state, bool) {
+      state.postCommentUpdateCheck = bool;
     },
   },
   actions: {
@@ -56,6 +71,68 @@ export default {
         return;
       }
       commit("setDeleteCheck", result.data.deletePost);
+    },
+
+    async registerPostComment({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.registerPostComment,
+          variables: {
+            post: {
+              UserId: getCookie("userId"),
+              PostId: payload.PostId,
+              comment: payload.comment,
+            },
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        console.log(result);
+        commit("setPostCommentRegisterCheck", result.data.registerPostComment);
+      }
+    },
+
+    async deletePostComment({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.deletePostComment,
+          variables: {
+            post: {
+              UserId: payload.UserId,
+              PostId: payload.PostId,
+              commentId: payload.commentId,
+            },
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        commit("setPostCommentDeleteCheck", result.data.deletePostComment);
+      }
+    },
+
+    async updatePostComment({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.updatePostComment,
+          variables: {
+            post: {
+              id: payload.commentId,
+              UserId: payload.UserId,
+              PostId: payload.PostId,
+              comment: payload.comment,
+            },
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        commit("setPostCommentUpdateCheck", result.data.updatePostComment);
+      }
     },
   },
 };
