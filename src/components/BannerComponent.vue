@@ -1,13 +1,13 @@
 <template>
   <div class="banner-wrap">
-    <div class="banner-router">
+    <div>
       <router-link to="/post">게시글</router-link>
     </div>
-    <div class="banner-router">방명록</div>
-    <div class="banner-router">캘린더</div>
-    <div class="banner-router">TIL</div>
-    <div class="banner-router">친구목록</div>
-    <div class="banner-router">
+    <div>방명록</div>
+    <div>캘린더</div>
+    <div>TIL</div>
+    <div>친구목록</div>
+    <div>
       <router-link to="/main"> 메인으로 </router-link>
     </div>
   </div>
@@ -28,7 +28,7 @@ export default {
   flex-direction: column;
   justify-content: space-around;
   background-color: #2c3e50;
-  height: 58.5%;
+  height: 500px;
   margin: 0px 5px 0px 0px;
   border: none;
 }
@@ -38,18 +38,18 @@ a {
   color: black;
 }
 
-.banner-router {
-  display: flex;
-  height: 100%;
+.banner-wrap div {
+  height: 200px;
   width: 100%;
-  align-items: center;
+  display: flex;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
   transition: all 0.2s;
   color: black;
 }
 
-.banner-router:hover {
+.banner-wrap div:hover {
   font-size: 22px;
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.4);
   background-color: white;

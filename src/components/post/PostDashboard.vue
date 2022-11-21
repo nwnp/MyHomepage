@@ -26,6 +26,7 @@
           </div>
         </div>
       </div>
+      <button class="register-post-btn">게시글 등록하기</button>
     </div>
     <PostModal
       v-if="editModalCheck"
@@ -184,6 +185,25 @@ export default {
   overflow: hidden;
 }
 
+.register-post-btn {
+  position: fixed;
+  right: auto;
+  left: auto;
+  bottom: 50px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2c3e50;
+  color: white;
+  width: 120px;
+  height: 40px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+  transition: all, 0.3s;
+}
+
+.register-post-btn:hover {
+  background-color: #446485;
+}
+
 .button-wrap {
   display: flex;
   justify-content: end;
@@ -191,23 +211,6 @@ export default {
   gap: 4px;
   border-radius: 8px 8px 0px 0px;
   padding: 4px;
-}
-
-button {
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  background-color: white;
-  border: none;
-  color: white;
-  cursor: pointer;
-  transition: all 0.4s;
-  color: black;
-}
-
-button:hover {
-  background-color: white;
-  color: black;
 }
 
 .modal {
