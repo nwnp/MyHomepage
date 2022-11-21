@@ -48,8 +48,8 @@
 <script>
 import { Query } from "@/apollo/query/query.js";
 import { getCookie } from "@/functions/getCookie.js";
-import PostModal from "@/components/modal/post/PostModal.vue";
-import PostDetailModal from "@/components/modal/post/PostDetailModal.vue";
+import PostModal from "@/components/v1/modal/post/PostModal.vue";
+import PostDetailModal from "@/components/v1/modal/post/PostDetailModal.vue";
 
 export default {
   components: {

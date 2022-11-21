@@ -34,7 +34,7 @@
 
 <script>
 import { getCookie } from "@/functions/getCookie.js";
-import { isLoggedIn } from "../functions/isAuthMiddleware.js";
+import { isLoggedIn } from "@/functions/isAuthMiddleware.js";
 import { Query } from "@/apollo/query/query.js";
 
 export default {
