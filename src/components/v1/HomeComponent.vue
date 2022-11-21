@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { isLoggedIn } from "../functions/isAuthMiddleware.js";
+import { isLoggedIn } from "@/functions/isAuthMiddleware.js";
 
 export default {
   data() {
