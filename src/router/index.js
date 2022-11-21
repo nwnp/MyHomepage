@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "../views/v1/HomeView.vue";
 
 Vue.use(VueRouter);
 
@@ -12,19 +12,19 @@ const routes = [
   },
   {
     path: "/main",
-    component: () => import("@/views/MainPage.vue"),
+    component: () => import("@/views/v1/MainPage.vue"),
   },
   {
     path: "/signup",
-    component: () => import("@/views/SignupView.vue"),
+    component: () => import("@/views/v1/SignupView.vue"),
   },
   {
     path: "/post",
-    component: () => import("@/views/PostView.vue"),
+    component: () => import("@/views/v1/PostView.vue"),
   },
   {
     path: "*",
-    component: () => import("../views/NotFound.vue"),
+    component: () => import("../views/v1/NotFound.vue"),
   },
 ];
 
