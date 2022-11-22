@@ -27,6 +27,7 @@ export default {
   padding: 10px;
   box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.3);
   height: 50px;
+  background-color: white;
 }
 
 .header-top {

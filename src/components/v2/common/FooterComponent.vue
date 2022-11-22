@@ -35,6 +35,10 @@ export default {};
   align-items: center;
 }
 
+.footer-container div {
+  cursor: pointer;
+}
+
 p {
   font-size: 13px;
   margin: 0px;
