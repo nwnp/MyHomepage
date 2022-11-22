@@ -10,10 +10,14 @@ const routes = [
     component: () => import("@/views/v2/HomeView.vue"),
   },
   // v2
+  {
+    path: "/main",
+    component: () => import("@/views/v2/MainPage.vue"),
+  },
 
   // v1
   {
-    path: "/main",
+    path: "/v1/main",
     component: () => import("@/views/v1/MainPage.vue"),
   },
   {
@@ -26,7 +30,7 @@ const routes = [
   },
   {
     path: "*",
-    component: () => import("../views/v1/NotFound.vue"),
+    component: () => import("../views/NotFound.vue"),
   },
 ];
 
