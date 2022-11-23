@@ -5,12 +5,17 @@
         <div class="main-post-list">
           <ul>
             <div class="wrap-name">내 최신 게시글</div>
-            <li v-if="getPostsByUserId.length < 1">
+            <li v-if="getLimitedPosts.length < 1">
               현재 게시글이 존재하지 않습니다 😭
             </li>
-            <li v-else v-for="(post, id) in getPostsByUserId" :key="(post, id)">
+            <li
+              v-else
+              v-for="(post, id) in getLimitedPosts"
+              :key="(post, id)"
+              @click="clickedPost(post.id)"
+            >
               <div class="post-title">📌 {{ post.title }}</div>
-              <div class="post-content">- {{ post.content }}</div>
+              <div class="post-content">{{ post.content }}</div>
             </li>
           </ul>
         </div>
@@ -35,17 +40,25 @@ import { getCookie } from "@/functions/getCookie";
 export default {
   data() {
     return {
-      getPostsByUserId: "",
+      getLimitedPosts: "",
     };
   },
   apollo: {
-    getPostsByUserId: {
-      query: Query.postForDashboard,
+    getLimitedPosts: {
+      query: Query.getLimitedPosts,
       variables() {
         return {
-          id: getCookie("userId"),
+          post: {
+            UserId: getCookie("userId"),
+            count: 3,
+          },
         };
       },
+    },
+  },
+  methods: {
+    clickedPost(postId) {
+      console.log("clicked post", postId);
     },
   },
 };
@@ -76,9 +89,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  width: 90%;
 }
 
 .main-til-wrap {
@@ -92,7 +103,6 @@ ul {
   flex-direction: column;
   margin: 0px;
   padding: 0px;
-  width: 100%;
   height: 100%;
 }
 
@@ -104,16 +114,20 @@ ul {
 li {
   list-style: none;
   margin: 0px 0px 7px 0px;
-  background-color: #e5e5e5;
   border-radius: 4px;
-  padding: 5px;
 }
 
 .post-content {
-  margin-left: 10px;
-  width: 100%;
   text-overflow: ellipsis;
+  width: auto;
   white-space: nowrap;
   overflow: hidden;
+  padding-left: 10px;
+  border-left: 2px solid #e5e5e5;
+  height: 30px;
+  color: #b7b7b7;
+  margin: 8px 0px 0px 10px;
+  display: flex;
+  align-items: center;
 }
 </style>

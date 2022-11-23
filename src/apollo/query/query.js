@@ -45,4 +45,17 @@ export const Query = {
       }
     }
   `,
+  getLimitedPosts: gql`
+    query ($post: LimitedPosts!) {
+      getLimitedPosts(post: $post) {
+        id
+        title
+        content
+        user {
+          email
+          nickname
+        }
+      }
+    }
+  `,
 };
