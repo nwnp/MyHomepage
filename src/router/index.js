@@ -14,6 +14,18 @@ const routes = [
     path: "/main",
     component: () => import("@/views/v2/MainPage.vue"),
   },
+  {
+    path: "/post",
+    component: () => import("@/views/v2/PostPage.vue"),
+  },
+  {
+    path: "/til",
+    component: () => import("@/views/v2/TILPage.vue"),
+  },
+  {
+    path: "/guest-book",
+    component: () => import("@/views/v2/GuestBookPage.vue"),
+  },
 
   // v1
   {

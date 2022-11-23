@@ -58,6 +58,7 @@ export default {
   background-color: #f2f0f0;
   width: 100%;
   height: 100vh;
+  overflow: scroll;
 }
 
 .main-wrap {

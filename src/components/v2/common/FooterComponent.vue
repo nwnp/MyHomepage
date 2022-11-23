@@ -1,18 +1,21 @@
 <template>
   <footer class="footer-container">
-    <div class="footer-post">
+    <router-link to="/post" class="footer-post">
+      <i class="fa-solid fa-file"></i>
       <p>게시글</p>
-    </div>
-    <div class="footer-home">
+    </router-link>
+    <router-link to="/main" class="footer-home">
       <i class="fa-solid fa-house-user"></i>
       <p>홈</p>
-    </div>
-    <div class="footer-til">
+    </router-link>
+    <router-link to="/til" class="footer-til">
+      <i class="fa-solid fa-list"></i>
       <p>TIL</p>
-    </div>
-    <div class="footer-guest-book">
+    </router-link>
+    <router-link to="/guest-book" class="footer-guest-book">
+      <i class="fa-solid fa-comments"></i>
       <p>방명록</p>
-    </div>
+    </router-link>
   </footer>
 </template>
 
@@ -37,6 +40,19 @@ export default {};
 
 .footer-container div {
   cursor: pointer;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-post {
+  text-align: center;
+}
+
+.footer-guest-book {
+  text-align: center;
 }
 
 p {
