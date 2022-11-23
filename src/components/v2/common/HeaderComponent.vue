@@ -6,15 +6,33 @@
         <i class="fa-solid fa-bars fa-xl"></i>
       </button>
     </div>
+    <div v-if="sidebar" class="sidebar-wrap">
+      <div class="sidebar">sidebar</div>
+    </div>
   </header>
 </template>
 
 <script>
+import { isLoggedIn } from "@/functions/isAuthMiddleware";
+
 export default {
+  data() {
+    return {
+      sidebar: false,
+    };
+  },
+  created() {
+    this.loginCheck();
+  },
   methods: {
     clickedMenu() {
-      console.log("position absolute으로 메뉴바 나오게 만들기");
-      console.log("다른 컴포넌트 실행시키기");
+      this.sidebar = !this.sidebar;
+    },
+    loginCheck() {
+      if (!isLoggedIn()) {
+        alert("로그인이 되어 있지 않습니다.");
+        this.$router.push("/");
+      }
     },
   },
 };
@@ -51,5 +69,22 @@ button {
 
 i {
   cursor: pointer;
+}
+
+.sidebar-wrap {
+  position: fixed;
+  display: flex;
+  right: 0;
+  top: 0;
+  left: -1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  flex-direction: row-reverse;
+}
+
+.sidebar {
+  background-color: white;
+  width: 55%;
 }
 </style>

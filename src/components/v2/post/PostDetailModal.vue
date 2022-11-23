@@ -13,6 +13,7 @@
         <form @submit.prevent="registerComment" class="post-comment-register">
           <input
             type="text"
+            v-model="inputValue"
             :placeholder="
               getPostWithComment.length
                 ? '댓글 달기'
@@ -81,8 +82,11 @@ export default {
   },
   methods: {
     async registerComment() {
-      if (this.inputValue.trim() == "")
-        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요 😿");
+      if (this.inputValue.trim() == "") {
+        alert("아무것도 입력하지 않았습니다. 다시 시도해주세요 😿");
+        this.inputValue = "";
+        return;
+      }
       const payload = {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
