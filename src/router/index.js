@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/v1/HomeView.vue";
 
 Vue.use(VueRouter);
 
@@ -8,10 +7,29 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: () => import("@/views/v2/HomeView.vue"),
   },
+  // v2
   {
     path: "/main",
+    component: () => import("@/views/v2/MainPage.vue"),
+  },
+  {
+    path: "/post",
+    component: () => import("@/views/v2/PostPage.vue"),
+  },
+  {
+    path: "/til",
+    component: () => import("@/views/v2/TILPage.vue"),
+  },
+  {
+    path: "/guest-book",
+    component: () => import("@/views/v2/GuestBookPage.vue"),
+  },
+
+  // v1
+  {
+    path: "/v1/main",
     component: () => import("@/views/v1/MainPage.vue"),
   },
   {
@@ -24,7 +42,7 @@ const routes = [
   },
   {
     path: "*",
-    component: () => import("../views/v1/NotFound.vue"),
+    component: () => import("../views/NotFound.vue"),
   },
 ];
 

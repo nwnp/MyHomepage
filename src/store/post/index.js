@@ -8,6 +8,7 @@ export default {
     postCommentRegisterCheck: false,
     postCommentDeleteCheck: false,
     postCommentUpdateCheck: false,
+    postModal: false,
   },
   getters: {
     updateCheck: (state) => state.updateCheck,
