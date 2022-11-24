@@ -1,6 +1,11 @@
 <template>
   <div class="container">
     <div class="modal-wrap">
+      <i
+        class="fa-solid fa-x"
+        style="color: #b9b9b9"
+        @click="$emit('closeModal')"
+      ></i>
       <div>
         <h3>게시글 자세히 보기</h3>
       </div>
@@ -37,8 +42,31 @@
                 <div class="comment-title-email">
                   ({{ comment.user.email }})
                 </div>
+                <div v-if="comment.user.id == me" class="comment-bottom">
+                  <div
+                    @click="commentId = comment.id"
+                    class="comment-title-button"
+                  >
+                    수정
+                  </div>
+                </div>
+                <div
+                  class="comment-title-button"
+                  @click="deleteComment(comment.id)"
+                >
+                  삭제
+                </div>
               </div>
               <div class="comment">{{ comment.post_comment }}</div>
+              <div v-if="commentId == comment.id" class="comment-bottom">
+                <input
+                  type="text"
+                  v-model="updateValue"
+                  :placeholder="comment.post_comment"
+                />
+                <button @click="updateCancel">취소</button>
+                <button @click="updateComment(comment.id)">등록</button>
+              </div>
             </div>
           </li>
         </ul>
@@ -82,11 +110,8 @@ export default {
   },
   methods: {
     async registerComment() {
-      if (this.inputValue.trim() == "") {
-        alert("아무것도 입력하지 않았습니다. 다시 시도해주세요 😿");
-        this.inputValue = "";
-        return;
-      }
+      if (!this.checkValue())
+        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요. 😿");
       const payload = {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
@@ -103,6 +128,7 @@ export default {
       }
     },
     async deleteComment(commentId) {
+      if (!confirm("댓글을 영구히 삭제하시겠습니까?")) return;
       const payload = {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
@@ -117,7 +143,8 @@ export default {
       alert("댓글 삭제가 완료되었습니다 😀");
     },
     async updateComment(commentId) {
-      console.log("comment id", commentId);
+      if (!this.checkValue())
+        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요. 😿");
       const payload = {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
@@ -131,12 +158,21 @@ export default {
         return alert("댓글 수정을 실패했습니다. 다시 시도해주세요 🙏");
       else {
         this.$apollo.queries.getPostWithComment.refetch();
+        this.inputValue = "";
+        this.commentId = "";
         alert("댓글 수정이 완료되었습니다 😀");
       }
     },
     updateCancel() {
       this.commentId = "";
       this.updateValue = "";
+    },
+    checkValue() {
+      if (this.updateValue.trim() == "") {
+        this.updateValue = "";
+        return false;
+      }
+      return true;
     },
   },
 };
@@ -230,12 +266,26 @@ li {
   align-items: center;
   display: flex;
   gap: 3px;
+  background-color: #f7f7f7;
 }
 
 .comment-title-email {
   margin: 5px;
   font-size: 0.8em;
   color: #b9b9b9;
+}
+
+.comment-title-button {
+  margin-left: 10px;
+  font-size: 0.8em;
+  color: #b9b9b9;
+  cursor: pointer;
+  transition: all, 0.3s;
+}
+
+.comment-title-button:hover {
+  color: #a1a1a1;
+  font-size: 1em;
 }
 
 .comment {
@@ -245,5 +295,11 @@ li {
   font-size: 0.9em;
   margin: 5px 0px 0px 5px;
   width: 100%;
+}
+
+i {
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
 }
 </style>

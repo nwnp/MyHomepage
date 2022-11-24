@@ -141,6 +141,7 @@ li {
   list-style: none;
   margin: 0px 0px 7px 0px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .post-content {
