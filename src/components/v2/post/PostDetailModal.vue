@@ -42,30 +42,39 @@
                 <div class="comment-title-email">
                   ({{ comment.user.email }})
                 </div>
-                <div v-if="comment.user.id == me" class="comment-bottom">
+                <div v-if="comment.user.id == me" class="comment-edit-button">
                   <div
-                    @click="commentId = comment.id"
+                    @click="
+                      commentId == ''
+                        ? (commentId = comment.id)
+                        : updateCancel()
+                    "
                     class="comment-title-button"
                   >
                     수정
                   </div>
-                </div>
-                <div
-                  class="comment-title-button"
-                  @click="deleteComment(comment.id)"
-                >
-                  삭제
+                  <div
+                    class="comment-title-button"
+                    @click="deleteComment(comment.id)"
+                  >
+                    삭제
+                  </div>
                 </div>
               </div>
               <div class="comment">{{ comment.post_comment }}</div>
-              <div v-if="commentId == comment.id" class="comment-bottom">
+              <div
+                v-if="commentId == comment.id"
+                style="display: flex; gap: 5px; align-items: center"
+              >
                 <input
                   type="text"
                   v-model="updateValue"
                   :placeholder="comment.post_comment"
                 />
-                <button @click="updateCancel">취소</button>
-                <button @click="updateComment(comment.id)">등록</button>
+                <button class="edit-button" @click="updateCancel">취소</button>
+                <button class="edit-button" @click="updateComment(comment.id)">
+                  등록
+                </button>
               </div>
             </div>
           </li>
@@ -275,17 +284,18 @@ li {
   color: #b9b9b9;
 }
 
+.comment-edit-button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .comment-title-button {
   margin-left: 10px;
   font-size: 0.8em;
   color: #b9b9b9;
   cursor: pointer;
   transition: all, 0.3s;
-}
-
-.comment-title-button:hover {
-  color: #a1a1a1;
-  font-size: 1em;
 }
 
 .comment {
@@ -295,6 +305,16 @@ li {
   font-size: 0.9em;
   margin: 5px 0px 0px 5px;
   width: 100%;
+}
+
+.edit-button {
+  border: none;
+  border-radius: 4px;
+  color: #a1a1a1;
+  font-size: 0.8em;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all, 0.3s;
 }
 
 i {
