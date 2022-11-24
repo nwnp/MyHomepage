@@ -90,7 +90,6 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        console.log(result);
         commit("setPostCommentRegisterCheck", result.data.registerPostComment);
       }
     },

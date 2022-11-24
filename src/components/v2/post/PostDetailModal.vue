@@ -97,9 +97,9 @@ export default {
       if (!result)
         return alert("댓글 등록에 실패했습니다. 다시 시도해주세요 🙏");
       else {
-        alert("댓글 등록에 성공했습니다 😀");
         this.inputValue = "";
-        this.$router.go();
+        this.$apollo.queries.getPostWithComment.refetch();
+        alert("댓글 등록에 성공했습니다 😀");
       }
     },
     async deleteComment(commentId) {
@@ -113,10 +113,8 @@ export default {
       const result = await this.$store.getters.postCommentDeleteCheck;
       if (!result)
         return alert("댓글 삭제를 실패했습니다. 다시 시도해주세요 🙏");
-      else {
-        alert("댓글 삭제가 완료되었습니다 😀");
-        this.$router.go();
-      }
+      this.$apollo.queries.getPostWithComment.refetch();
+      alert("댓글 삭제가 완료되었습니다 😀");
     },
     async updateComment(commentId) {
       console.log("comment id", commentId);
@@ -132,8 +130,8 @@ export default {
       if (!result)
         return alert("댓글 수정을 실패했습니다. 다시 시도해주세요 🙏");
       else {
+        this.$apollo.queries.getPostWithComment.refetch();
         alert("댓글 수정이 완료되었습니다 😀");
-        this.$router.go();
       }
     },
     updateCancel() {
