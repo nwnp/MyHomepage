@@ -1,11 +1,17 @@
 <template>
   <div>
-    <h1>GUESTBOOK PAGE</h1>
+    <GuestBookComponent />
   </div>
 </template>
 
 <script>
-export default {};
+import GuestBookComponent from "@/components/v2/guest-book/GuestBookComponent.vue";
+
+export default {
+  components: {
+    GuestBookComponent,
+  },
+};
 </script>
 
 <style scoped></style>

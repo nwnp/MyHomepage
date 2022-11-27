@@ -58,4 +58,18 @@ export const Query = {
       }
     }
   `,
+  getComments: gql`
+    query {
+      getComments {
+        id
+        comment
+        secret
+        user {
+          id
+          email
+          nickname
+        }
+      }
+    }
+  `,
 };
