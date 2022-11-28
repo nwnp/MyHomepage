@@ -9,7 +9,6 @@
 <script>
 import HeaderComponent from "@/components/v2/common/HeaderComponent.vue";
 import FooterComponent from "@/components/v2/common/FooterComponent.vue";
-import { getCookie } from "./functions/getCookie";
 
 export default {
   components: {
@@ -21,14 +20,7 @@ export default {
   },
   methods: {
     alertWhenStart() {
-      if (
-        !getCookie("userId") &&
-        window.location.href == "http://localhost:8081/"
-      ) {
-        return alert(
-          `모바일에 최적화된 사이트입니다\n모바일 환경에서 접속바랍니다 😀`
-        );
-      }
+      alert(`모바일에 최적화된 사이트입니다\n모바일 환경에서 접속바랍니다 😀`);
     },
   },
 };

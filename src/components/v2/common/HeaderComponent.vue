@@ -13,26 +13,15 @@
 </template>
 
 <script>
-import { isLoggedIn } from "@/functions/isAuthMiddleware";
-
 export default {
   data() {
     return {
       sidebar: false,
     };
   },
-  created() {
-    this.loginCheck();
-  },
   methods: {
     clickedMenu() {
       this.sidebar = !this.sidebar;
-    },
-    loginCheck() {
-      if (!isLoggedIn()) {
-        alert("로그인이 되어 있지 않습니다.");
-        this.$router.push("/");
-      }
     },
   },
 };
