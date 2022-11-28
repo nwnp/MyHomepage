@@ -65,10 +65,7 @@ export default {
       query: Query.getLimitedPosts,
       variables() {
         return {
-          post: {
-            UserId: getCookie("userId"),
-            count: 3,
-          },
+          count: 3,
         };
       },
     },
@@ -141,6 +138,7 @@ li {
   list-style: none;
   margin: 0px 0px 7px 0px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .post-content {

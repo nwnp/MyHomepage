@@ -1,6 +1,11 @@
 <template>
   <div class="container">
     <div class="modal-wrap">
+      <i
+        class="fa-solid fa-x"
+        style="color: #b9b9b9"
+        @click="$emit('closeModal')"
+      ></i>
       <div>
         <h3>게시글 자세히 보기</h3>
       </div>
@@ -13,6 +18,7 @@
         <form @submit.prevent="registerComment" class="post-comment-register">
           <input
             type="text"
+            v-model="inputValue"
             :placeholder="
               getPostWithComment.length
                 ? '댓글 달기'
@@ -36,8 +42,40 @@
                 <div class="comment-title-email">
                   ({{ comment.user.email }})
                 </div>
+                <div v-if="comment.user.id == me" class="comment-edit-button">
+                  <div
+                    @click="
+                      commentId == ''
+                        ? (commentId = comment.id)
+                        : updateCancel()
+                    "
+                    class="comment-title-button"
+                  >
+                    수정
+                  </div>
+                  <div
+                    class="comment-title-button"
+                    @click="deleteComment(comment.id)"
+                  >
+                    삭제
+                  </div>
+                </div>
               </div>
               <div class="comment">{{ comment.post_comment }}</div>
+              <div
+                v-if="commentId == comment.id"
+                style="display: flex; gap: 5px; align-items: center"
+              >
+                <input
+                  type="text"
+                  v-model="updateValue"
+                  :placeholder="comment.post_comment"
+                />
+                <button class="edit-button" @click="updateCancel">취소</button>
+                <button class="edit-button" @click="updateComment(comment.id)">
+                  등록
+                </button>
+              </div>
             </div>
           </li>
         </ul>
@@ -71,18 +109,15 @@ export default {
       query: Query.getPostWithComment,
       variables() {
         return {
-          info: {
-            UserId: getCookie("userId"),
-            PostId: this.postInfo.PostId,
-          },
+          postId: this.postInfo.PostId,
         };
       },
     },
   },
   methods: {
     async registerComment() {
-      if (this.inputValue.trim() == "")
-        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요 😿");
+      if (!this.checkValue())
+        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요. 😿");
       const payload = {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
@@ -93,12 +128,13 @@ export default {
       if (!result)
         return alert("댓글 등록에 실패했습니다. 다시 시도해주세요 🙏");
       else {
-        alert("댓글 등록에 성공했습니다 😀");
         this.inputValue = "";
-        this.$router.go();
+        this.$apollo.queries.getPostWithComment.refetch();
+        alert("댓글 등록에 성공했습니다 😀");
       }
     },
     async deleteComment(commentId) {
+      if (!confirm("댓글을 영구히 삭제하시겠습니까?")) return;
       const payload = {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
@@ -109,13 +145,12 @@ export default {
       const result = await this.$store.getters.postCommentDeleteCheck;
       if (!result)
         return alert("댓글 삭제를 실패했습니다. 다시 시도해주세요 🙏");
-      else {
-        alert("댓글 삭제가 완료되었습니다 😀");
-        this.$router.go();
-      }
+      this.$apollo.queries.getPostWithComment.refetch();
+      alert("댓글 삭제가 완료되었습니다 😀");
     },
     async updateComment(commentId) {
-      console.log("comment id", commentId);
+      if (!this.checkValue())
+        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요. 😿");
       const payload = {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
@@ -128,13 +163,22 @@ export default {
       if (!result)
         return alert("댓글 수정을 실패했습니다. 다시 시도해주세요 🙏");
       else {
+        this.$apollo.queries.getPostWithComment.refetch();
+        this.inputValue = "";
+        this.commentId = "";
         alert("댓글 수정이 완료되었습니다 😀");
-        this.$router.go();
       }
     },
     updateCancel() {
       this.commentId = "";
       this.updateValue = "";
+    },
+    checkValue() {
+      if (this.updateValue.trim() == "") {
+        this.updateValue = "";
+        return false;
+      }
+      return true;
     },
   },
 };
@@ -228,12 +272,27 @@ li {
   align-items: center;
   display: flex;
   gap: 3px;
+  background-color: #f7f7f7;
 }
 
 .comment-title-email {
   margin: 5px;
   font-size: 0.8em;
   color: #b9b9b9;
+}
+
+.comment-edit-button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.comment-title-button {
+  margin-left: 10px;
+  font-size: 0.8em;
+  color: #b9b9b9;
+  cursor: pointer;
+  transition: all, 0.3s;
 }
 
 .comment {
@@ -243,5 +302,21 @@ li {
   font-size: 0.9em;
   margin: 5px 0px 0px 5px;
   width: 100%;
+}
+
+.edit-button {
+  border: none;
+  border-radius: 4px;
+  color: #a1a1a1;
+  font-size: 0.8em;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all, 0.3s;
+}
+
+i {
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
 }
 </style>

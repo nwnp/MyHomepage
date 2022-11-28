@@ -42,7 +42,6 @@ export default {
           mutation: Mutation.updatePost,
           variables: {
             post: {
-              UserId: getCookie("userId"),
               PostId: payload.PostId,
               title: payload.title,
               content: payload.content,
@@ -63,7 +62,7 @@ export default {
         result = await payload.apollo.mutate({
           mutation: Mutation.deletePost,
           variables: {
-            id: payload.PostId,
+            postId: payload.PostId,
           },
         });
       } catch (error) {
@@ -90,7 +89,6 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        console.log(result);
         commit("setPostCommentRegisterCheck", result.data.registerPostComment);
       }
     },
@@ -102,7 +100,6 @@ export default {
           mutation: Mutation.deletePostComment,
           variables: {
             post: {
-              UserId: payload.UserId,
               PostId: payload.PostId,
               commentId: payload.commentId,
             },
@@ -123,7 +120,6 @@ export default {
           variables: {
             post: {
               id: payload.commentId,
-              UserId: payload.UserId,
               PostId: payload.PostId,
               comment: payload.comment,
             },

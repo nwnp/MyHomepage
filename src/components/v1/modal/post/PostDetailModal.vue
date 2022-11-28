@@ -86,10 +86,7 @@ export default {
       query: Query.getPostWithComment,
       variables() {
         return {
-          info: {
-            UserId: getCookie("userId"),
-            PostId: this.postInfo.PostId,
-          },
+          postId: this.postInfo.PostId,
         };
       },
     },
@@ -115,7 +112,6 @@ export default {
       const payload = {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
-        UserId: getCookie("userId"),
         commentId,
       };
       await this.$store.dispatch("deletePostComment", payload);
