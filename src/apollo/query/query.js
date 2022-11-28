@@ -29,10 +29,11 @@ export const Query = {
     }
   `,
   getPostWithComment: gql`
-    query ($info: PostCommentInfo!) {
-      getPostWithComment(info: $info) {
+    query ($postId: ID!) {
+      getPostWithComment(postId: $postId) {
         id
         post_comment
+        CommentedUserId
         post {
           title
           content
@@ -46,8 +47,8 @@ export const Query = {
     }
   `,
   getLimitedPosts: gql`
-    query ($post: LimitedPosts!) {
-      getLimitedPosts(post: $post) {
+    query ($count: Int!) {
+      getLimitedPosts(count: $count) {
         id
         title
         content

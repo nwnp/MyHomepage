@@ -1,9 +1,17 @@
 <template>
-  <div><h1>POST PAGE</h1></div>
+  <div>
+    <PostComponent />
+  </div>
 </template>
 
 <script>
-export default {};
+import PostComponent from "@/components/v2/post/PostComponent.vue";
+
+export default {
+  components: {
+    PostComponent,
+  },
+};
 </script>
 
 <style scoped></style>

@@ -109,10 +109,7 @@ export default {
       query: Query.getPostWithComment,
       variables() {
         return {
-          info: {
-            UserId: getCookie("userId"),
-            PostId: this.postInfo.PostId,
-          },
+          postId: this.postInfo.PostId,
         };
       },
     },
