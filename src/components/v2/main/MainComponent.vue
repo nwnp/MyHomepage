@@ -65,10 +65,7 @@ export default {
       query: Query.getLimitedPosts,
       variables() {
         return {
-          post: {
-            UserId: getCookie("userId"),
-            count: 3,
-          },
+          count: 3,
         };
       },
     },

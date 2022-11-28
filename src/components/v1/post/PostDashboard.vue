@@ -73,19 +73,9 @@ export default {
   apollo: {
     me: {
       query: Query.meForDashboard,
-      variables() {
-        return {
-          id: parseInt(getCookie("userId")),
-        };
-      },
     },
     getPostsByUserId: {
       query: Query.postForDashboard,
-      variables() {
-        return {
-          id: getCookie("userId"),
-        };
-      },
     },
   },
   methods: {
