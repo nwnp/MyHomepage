@@ -46,9 +46,7 @@
         </div>
       </div>
       <div class="links">
-        <div class="signup">
-          <router-link to="/signup">SIGNUP</router-link>
-        </div>
+        <router-link to="/signup">SIGNUP</router-link>
         <div class="forgot-password">
           <b> FORGOT PASSWORD? </b>
         </div>
@@ -110,6 +108,34 @@ export default {
   box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.5);
   justify-content: space-between;
   padding: 2em;
+}
+
+/* @media (max-width: 361px) {
+  .home-container {
+    width: 200px;
+  }
+} */
+
+@media (max-height: 700px) and (max-width: 361px) {
+  .home-container {
+    width: 200px;
+    height: 400px;
+    font-size: 0.8em;
+  }
+  .links {
+    margin-top: 10px;
+  }
+  .facebook {
+    margin-top: 10px;
+  }
+
+  .google {
+    margin-top: 10px;
+  }
+
+  .github {
+    margin-top: 10px;
+  }
 }
 
 .title {

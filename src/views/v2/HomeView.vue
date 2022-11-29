@@ -17,9 +17,8 @@ export default {
 
 <style scoped>
 .home {
+  padding: 10px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
 }
 </style>
