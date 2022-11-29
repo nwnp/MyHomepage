@@ -15,12 +15,12 @@ export default {
     HeaderComponent,
     FooterComponent,
   },
-  mounted() {
+  created() {
     this.alertWhenStart();
   },
   methods: {
     alertWhenStart() {
-      alert(`모바일에 최적화된 사이트입니다\n모바일 환경에서 접속바랍니다 😀`);
+      // alert(`모바일에 최적화된 사이트입니다\n모바일 환경에서 접속바랍니다 😀`);
     },
   },
 };
@@ -29,5 +29,6 @@ export default {
 <style scoped>
 .app {
   background-color: #f2f0f0;
+  height: 100%;
 }
 </style>

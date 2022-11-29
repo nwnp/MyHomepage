@@ -144,7 +144,6 @@ export default {
 .form-wrap {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   justify-content: space-around;
   width: 300px;
 }

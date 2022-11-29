@@ -23,6 +23,10 @@ const routes = [
     component: () => import("@/views/v2/TILPage.vue"),
   },
   {
+    path: "/signup",
+    component: () => import("@/views/v2/SignupPage.vue"),
+  },
+  {
     path: "/guest-book",
     component: () => import("@/views/v2/GuestBookPage.vue"),
   },
@@ -33,7 +37,7 @@ const routes = [
     component: () => import("@/views/v1/MainPage.vue"),
   },
   {
-    path: "/signup",
+    path: "/v1/signup",
     component: () => import("@/views/v1/SignupView.vue"),
   },
   {
