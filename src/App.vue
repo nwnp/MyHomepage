@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app">
     <HeaderComponent />
-    <router-view />
+    <router-view class="router" />
     <FooterComponent />
   </div>
 </template>
@@ -29,6 +29,9 @@ export default {
 <style scoped>
 .app {
   background-color: #f2f0f0;
+  height: 100%;
+}
+.router {
   height: 100%;
 }
 </style>

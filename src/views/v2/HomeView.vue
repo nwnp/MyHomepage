@@ -1,7 +1,7 @@
 <template>
-  <article class="home">
+  <div>
     <HomeComponent />
-  </article>
+  </div>
 </template>
 
 <script>
@@ -15,10 +15,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.home {
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-}
-</style>
+<style scoped></style>

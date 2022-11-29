@@ -32,7 +32,7 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5) inset;
   height: 50px;
   background-color: white;
 }
