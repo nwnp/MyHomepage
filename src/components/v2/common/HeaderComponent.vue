@@ -23,8 +23,11 @@ export default {
   },
   methods: {
     clickedMenu() {
-      if (getCookie("userId")) this.sidebar = !this.sidebar;
-      else return;
+      if (getCookie("userId")) {
+        this.sidebar = !this.sidebar;
+        return;
+      }
+      alert("로그인이 되어 있지 않습니다.");
     },
   },
 };

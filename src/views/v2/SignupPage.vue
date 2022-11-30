@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <SignupComponent />
   </div>
 </template>
@@ -13,8 +13,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.home {
-}
-</style>

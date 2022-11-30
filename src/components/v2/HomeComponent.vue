@@ -18,9 +18,11 @@
       <button style="submit" class="login-btn">로그인</button>
     </form>
     <div class="home-bottom">
-      <router-link to="/">이메일 찾기</router-link>
-      <router-link to="/">비밀번호 찾기</router-link>
-      <router-link to="/signup">회원가입</router-link>
+      <div class="home-bottom-wrap">
+        <router-link to="/">이메일 찾기</router-link>
+        <router-link to="/">비밀번호 찾기</router-link>
+        <router-link to="/signup">회원가입</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +39,7 @@ export default {
   },
   created() {
     this.loginCheck();
+    this.alertWhenStart();
   },
   methods: {
     loginCheck() {
@@ -62,6 +65,9 @@ export default {
     clearForm() {
       this.email = "";
       this.password = "";
+    },
+    alertWhenStart() {
+      alert(`모바일에 최적화된 사이트입니다\n모바일 환경에서 접속바랍니다 😀`);
     },
   },
 };
@@ -116,6 +122,11 @@ export default {
 }
 
 .home-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.home-bottom-wrap {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
@@ -132,5 +143,30 @@ a {
   text-align: center;
   text-decoration: none;
   color: #4c4c4c;
+}
+
+@media (min-width: 700px) {
+  .form {
+    justify-content: center;
+    align-items: center;
+  }
+  .form input,
+  .login-btn,
+  .home-bottom-wrap {
+    width: 400px;
+  }
+}
+
+@media (max-width: 300px) {
+  .home-title {
+    font-size: 2em;
+  }
+  .form input {
+    font-size: 0.8em;
+  }
+  .login-btn {
+    font-size: 0.8em;
+    height: 35px;
+  }
 }
 </style>
