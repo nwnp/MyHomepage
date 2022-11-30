@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     loginCheck() {
-      if (isLoggedIn()) this.$router.push("/main");
+      if (isLoggedIn()) this.$router.push(`/main/${getCookie("userId")}`);
     },
     async submitLogin() {
       await this.$store.dispatch("Login", {
