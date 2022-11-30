@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { getCookie } from "@/functions/getCookie";
+
 export default {
   data() {
     return {
@@ -21,7 +23,8 @@ export default {
   },
   methods: {
     clickedMenu() {
-      this.sidebar = !this.sidebar;
+      if (getCookie("userId")) this.sidebar = !this.sidebar;
+      else return;
     },
   },
 };
