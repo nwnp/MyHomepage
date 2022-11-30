@@ -1,7 +1,7 @@
 <template>
   <header class="header-container">
     <div class="header-top">
-      <a href="/main">MY-HOMEPAGE</a>
+      <a :href="`/main/${userId}`">MY-HOMEPAGE</a>
       <button @click="clickedMenu">
         <i class="fa-solid fa-bars fa-xl"></i>
       </button>
@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       sidebar: false,
+      userId: getCookie("userId"),
     };
   },
   methods: {
