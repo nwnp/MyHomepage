@@ -1,6 +1,7 @@
 <template>
   <div class="main-container">
     <div class="main-wrap">
+      <div class="main-userinfo-wrap"></div>
       <div class="main-post-wrap">
         <div class="main-post-list">
           <ul>
@@ -52,6 +53,7 @@ export default {
     return {
       getLimitedPosts: "",
       postDetailModal: false,
+      userId: this.$route.params.id,
       postInfo: {
         modalType: "",
         title: "",

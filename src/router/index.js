@@ -11,7 +11,7 @@ const routes = [
   },
   // v2
   {
-    path: "/main",
+    path: "/main/:id",
     component: () => import("@/views/v2/MainPage.vue"),
   },
   {
