@@ -29,6 +29,7 @@
 
 <script>
 import { isLoggedIn } from "@/functions/isAuthMiddleware.js";
+import { getCookie } from "@/functions/getCookie";
 
 export default {
   data() {
@@ -60,7 +61,7 @@ export default {
         return;
       }
       alert("로그인에 성공했습니다.");
-      this.$router.push({ path: "/main" });
+      this.$router.push({ path: `/main/${getCookie("userId")}` });
     },
     clearForm() {
       this.email = "";
