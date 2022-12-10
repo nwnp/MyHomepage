@@ -1,9 +1,8 @@
 <template>
   <div class="main-container">
     <div class="main-wrap">
-      <div class="main-userinfo-wrap"></div>
-      <div class="main-post-wrap">
-        <div class="main-post-list">
+      <div class="main-card-wrap">
+        <div class="main-card-list">
           <ul>
             <div class="wrap-name">내 최신 게시글</div>
             <li v-if="getLimitedPosts.length < 1">
@@ -15,26 +14,42 @@
               :key="(post, id)"
               @click="clickedPost(id, 'DETAIL')"
             >
-              <div class="post-title">📌 {{ post.title }}</div>
-              <div class="post-content">{{ post.content }}</div>
+              <div class="card-title">📌 {{ post.title }}</div>
+              <div class="card-content">{{ post.content }}</div>
             </li>
           </ul>
         </div>
       </div>
-      <div class="main-til-wrap">
-        <div class="main-til-list">
+      <div class="main-card-wrap">
+        <div class="main-card-list">
           <ul>
-            <li>TIL 1</li>
-            <li>TIL 2</li>
-            <li>TIL 3</li>
+            <div class="wrap-name">내 최신 TIL</div>
+            <li v-if="getLimitedTils.length < 1">
+              현재 TIL이 존재하지 않습니다 😭
+            </li>
+            <li
+              v-else
+              v-for="(til, id) in getLimitedTils"
+              :key="(til, id)"
+              @click="clickedTil(id)"
+            >
+              <div class="card-title">📌 {{ til.title }}</div>
+              <div class="card-content">{{ til.til_content }}</div>
+            </li>
           </ul>
         </div>
       </div>
     </div>
     <PostDetailModal
       v-if="postDetailModal"
-      class="post-detail-modal"
+      class="detail-modal"
       :postInfo="postInfo"
+      @closeModal="closeModal"
+    />
+    <TilDetailComponent
+      v-if="tilDetailModal"
+      class="detail-modal"
+      :tilInfo="tilInfo"
       @closeModal="closeModal"
     />
   </div>
@@ -42,23 +57,33 @@
 
 <script>
 import { Query } from "@/apollo/query/query";
-import { getCookie } from "@/functions/getCookie";
 import PostDetailModal from "@/components/v2/post/PostDetailModal.vue";
+import TilDetailComponent from "@/components/v2/til/TilDetailComponent.vue";
 
 export default {
   components: {
     PostDetailModal,
+    TilDetailComponent,
   },
   data() {
     return {
       getLimitedPosts: "",
+      getLimitedTils: "",
       postDetailModal: false,
+      tilDetailModal: false,
       userId: this.$route.params.id,
       postInfo: {
+        UserId: "",
         modalType: "",
         title: "",
         content: "",
         PostId: "",
+      },
+      tilInfo: {
+        tilId: "",
+        title: "",
+        content: "",
+        userId: "",
       },
     };
   },
@@ -67,7 +92,21 @@ export default {
       query: Query.getLimitedPosts,
       variables() {
         return {
-          count: 3,
+          post: {
+            count: 3,
+            UserId: ~~this.userId,
+          },
+        };
+      },
+    },
+    getLimitedTils: {
+      query: Query.getLimitedTils,
+      variables() {
+        return {
+          til: {
+            UserId: ~~this.userId,
+            count: 3,
+          },
         };
       },
     },
@@ -79,11 +118,22 @@ export default {
         title: this.getLimitedPosts[id].title,
         content: this.getLimitedPosts[id].content,
         PostId: this.getLimitedPosts[id].id,
+        UserId: this.$route.params.id,
       };
       this.postDetailModal = !this.postDetailModal;
     },
-    closeModal() {
-      this.postDetailModal = !this.postDetailModal;
+    clickedTil(id) {
+      this.tilInfo = {
+        tilId: this.getLimitedTils[id].id,
+        title: this.getLimitedTils[id].title,
+        content: this.getLimitedTils[id].til_content,
+        userId: this.$route.params.id,
+      };
+      this.tilDetailModal = !this.tilDetailModal;
+    },
+    closeModal(type) {
+      if (type == "post") this.postDetailModal = !this.postDetailModal;
+      else this.tilDetailModal = !this.tilDetailModal;
     },
   },
 };
@@ -104,23 +154,17 @@ export default {
   margin-bottom: 65px;
 }
 
-.main-post-wrap {
+.main-card-wrap {
   background-color: white;
   padding: 10px;
   margin-bottom: 10px;
 }
 
-.main-post-list {
+.main-card-list {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 90%;
-}
-
-.main-til-wrap {
-  background-color: white;
-  padding: 10px;
-  margin-bottom: 10px;
 }
 
 ul {
@@ -143,7 +187,7 @@ li {
   cursor: pointer;
 }
 
-.post-content {
+.card-content {
   text-overflow: ellipsis;
   width: auto;
   white-space: nowrap;
@@ -157,7 +201,7 @@ li {
   align-items: center;
 }
 
-.post-detail-modal {
+.detail-modal {
   position: fixed;
   top: 0;
   left: 0;

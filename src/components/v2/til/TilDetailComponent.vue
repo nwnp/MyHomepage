@@ -4,23 +4,23 @@
       <i
         class="fa-solid fa-x"
         style="color: #b9b9b9"
-        @click="$emit('closeModal', 'post')"
-      ></i>
+        @click="$emit('closeModal', 'til')"
+      />
       <div>
-        <h3>게시글 자세히 보기</h3>
+        <h3>TIL 자세히 보기</h3>
       </div>
-      <div class="post-title">
+      <div class="til-title">
         <div>TITLE</div>
-        <div>{{ postInfo.title }}</div>
+        <div>{{ tilInfo.title }}</div>
       </div>
-      <div class="post-content">{{ postInfo.content }}</div>
-      <div class="post-comment-wrap">
-        <form @submit.prevent="registerComment" class="post-comment-register">
+      <div class="til-content">{{ tilInfo.content }}</div>
+      <div class="til-comment-wrap">
+        <form @submit.prevent="registerComment" class="til-comment-register">
           <input
             type="text"
             v-model="inputValue"
             :placeholder="
-              getPostWithComment.length
+              getTilWithComment.length
                 ? '댓글 달기'
                 : '댓글이 없습니다.. 채워주시렵니까 😭'
             "
@@ -28,10 +28,10 @@
           <button type="submit">댓글 등록</button>
         </form>
         <ul>
-          <li v-if="getPostWithComment.length < 1">텅.... 😿</li>
+          <li v-if="getTilWithComment.length < 1">텅.... 😿</li>
           <li
             v-else
-            v-for="(comment, id) in getPostWithComment"
+            v-for="(comment, id) in getTilWithComment"
             :key="(comment, id)"
           >
             <div class="comment-wrap">
@@ -61,7 +61,7 @@
                   </div>
                 </div>
               </div>
-              <div class="comment">{{ comment.post_comment }}</div>
+              <div class="comment">{{ comment.til_comment }}</div>
               <div
                 v-if="commentId == comment.id"
                 style="display: flex; gap: 5px; align-items: center"
@@ -69,7 +69,7 @@
                 <input
                   type="text"
                   v-model="updateValue"
-                  :placeholder="comment.post_comment"
+                  :placeholder="comment.til_content"
                 />
                 <button class="edit-button" @click="updateCancel">취소</button>
                 <button class="edit-button" @click="updateComment(comment.id)">
@@ -90,49 +90,49 @@ import { getCookie } from "@/functions/getCookie";
 
 export default {
   props: {
-    postInfo: {
+    tilInfo: {
       type: Object,
       required: true,
     },
   },
   data() {
     return {
-      getPostWithComment: "",
+      getTilWithComment: "",
       inputValue: "",
-      me: getCookie("userId"),
       updateValue: "",
       commentId: "",
+      me: getCookie("userId"),
     };
   },
   apollo: {
-    getPostWithComment: {
-      query: Query.getPostWithComment,
+    getTilWithComment: {
+      query: Query.getTilWithComment,
       variables() {
         return {
-          info: {
-            UserId: ~~this.postInfo.UserId,
-            PostId: ~~this.postInfo.PostId,
-          },
+          tilId: ~~this.tilInfo.tilId,
         };
       },
     },
   },
   methods: {
     async registerComment() {
-      if (!this.checkValue("register"))
-        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요. 😿");
+      if (this.checkValue(this.inputValue))
+        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요 😭");
+
       const payload = {
         apollo: this.$apollo,
-        PostId: this.postInfo.PostId,
-        comment: this.inputValue,
+        TilId: this.tilInfo.tilId,
+        UserId: getCookie("userId"),
+        til_comment: this.inputValue,
       };
-      await this.$store.dispatch("registerPostComment", payload);
-      const result = await this.$store.getters.postCommentRegisterCheck;
-      if (!result)
+      await this.$store.dispatch("registerTilComment", payload);
+      const result = await this.$store.getters.tilCommentRegisterCheck;
+      if (!result) {
+        this.clearForm();
         return alert("댓글 등록에 실패했습니다. 다시 시도해주세요 🙏");
-      else {
-        this.inputValue = "";
-        this.$apollo.queries.getPostWithComment.refetch();
+      } else {
+        this.clearForm();
+        this.$apollo.queries.getTilWithComment.refetch();
         alert("댓글 등록에 성공했습니다 😀");
       }
     },
@@ -140,34 +140,33 @@ export default {
       if (!confirm("댓글을 영구히 삭제하시겠습니까?")) return;
       const payload = {
         apollo: this.$apollo,
-        PostId: this.postInfo.PostId,
-        UserId: getCookie("userId"),
-        commentId,
+        id: commentId,
+        CommentedUserId: getCookie("userId"),
       };
-      await this.$store.dispatch("deletePostComment", payload);
-      const result = await this.$store.getters.postCommentDeleteCheck;
+      await this.$store.dispatch("deleteTilComment", payload);
+      const result = await this.$store.getters.tilCommentDeleteCheck;
       if (!result)
         return alert("댓글 삭제를 실패했습니다. 다시 시도해주세요 🙏");
-      this.$apollo.queries.getPostWithComment.refetch();
+      this.$apollo.queries.getTilWithComment.refetch();
       alert("댓글 삭제가 완료되었습니다 😀");
     },
     async updateComment(commentId) {
-      if (!this.checkValue("update"))
-        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요. 😿");
+      if (this.checkValue(this.updateValue))
+        return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요 😭");
+
       const payload = {
         apollo: this.$apollo,
-        PostId: this.postInfo.PostId,
-        UserId: getCookie("userId"),
-        comment: this.updateValue,
-        commentId,
+        id: commentId,
+        CommentedUserId: getCookie("userId"),
+        til_comment: this.updateValue,
       };
-      await this.$store.dispatch("updatePostComment", payload);
-      const result = await this.$store.getters.postCommentUpdateCheck;
+      await this.$store.dispatch("updateTilComment", payload);
+      const result = await this.$store.getters.tilCommentUpdateCheck;
       if (!result)
         return alert("댓글 수정을 실패했습니다. 다시 시도해주세요 🙏");
       else {
-        this.$apollo.queries.getPostWithComment.refetch();
-        this.inputValue = "";
+        this.$apollo.queries.getTilWithComment.refetch();
+        this.updateValue = "";
         this.commentId = "";
         alert("댓글 수정이 완료되었습니다 😀");
       }
@@ -176,20 +175,12 @@ export default {
       this.commentId = "";
       this.updateValue = "";
     },
-    checkValue(type) {
-      if (type == "register") {
-        if (this.inputValue.trim() == "") {
-          this.inputValue = "";
-          return false;
-        }
-        return true;
-      } else {
-        if (this.updateValue.trim() == "") {
-          this.updateValue = "";
-          return false;
-        }
-        return true;
-      }
+    clearForm() {
+      this.inputValue = "";
+      this.updateValue = "";
+    },
+    checkValue(value) {
+      return value.trim() === "";
     },
   },
 };
@@ -218,7 +209,7 @@ h3 {
   text-align: center;
 }
 
-.post-title {
+.til-title {
   display: flex;
   gap: 10px;
   font-size: 1.25em;
@@ -226,14 +217,14 @@ h3 {
   font-weight: bold;
 }
 
-.post-content {
+.til-content {
   border: 1px solid #e5e5e5;
   padding: 5px;
   height: 40%;
   margin-bottom: 10px;
 }
 
-.post-comment-register {
+.til-comment-register {
   display: flex;
   gap: 10px;
   align-items: center;
@@ -250,7 +241,7 @@ input {
   border-bottom: 1px solid #e5e5e5;
 }
 
-.post-comment-register button {
+.til-comment-register button {
   width: 20%;
   height: 100%;
   border: none;
@@ -261,7 +252,7 @@ input {
   transition: all 0.3s;
 }
 
-.post-comment-register button:hover {
+.til-comment-register button:hover {
   background-color: #60b6f0;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.5) inset;
 }

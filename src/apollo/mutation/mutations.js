@@ -45,4 +45,19 @@ export const Mutation = {
       updatePostComment(post: $post)
     }
   `,
+  registerTilComment: gql`
+    mutation ($til: RegisterTilComment!) {
+      registerTilComment(til: $til)
+    }
+  `,
+  deleteTilComment: gql`
+    mutation ($til: DeleteTilComment!) {
+      deleteTilComment(til: $til)
+    }
+  `,
+  updateTilComment: gql`
+    mutation ($til: UpdateTilComment!) {
+      updateTilComment(til: $til)
+    }
+  `,
 };
