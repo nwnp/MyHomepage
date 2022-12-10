@@ -29,8 +29,8 @@ export const Query = {
     }
   `,
   getPostWithComment: gql`
-    query ($postId: ID!) {
-      getPostWithComment(postId: $postId) {
+    query ($info: PostWithComment!) {
+      getPostWithComment(info: $info) {
         id
         post_comment
         CommentedUserId
@@ -47,11 +47,12 @@ export const Query = {
     }
   `,
   getLimitedPosts: gql`
-    query ($count: Int!) {
-      getLimitedPosts(count: $count) {
+    query ($post: LimitedPosts!) {
+      getLimitedPosts(post: $post) {
         id
         title
         content
+        createdAt
         user {
           email
           nickname
@@ -69,6 +70,36 @@ export const Query = {
           id
           email
           nickname
+        }
+      }
+    }
+  `,
+  getLimitedTils: gql`
+    query ($til: LimitedTils!) {
+      getLimitedTils(til: $til) {
+        id
+        til_content
+        title
+        UserId
+        createdAt
+      }
+    }
+  `,
+  getTilWithComment: gql`
+    query ($tilId: ID!) {
+      getTilWithComment(tilId: $tilId) {
+        id
+        createdAt
+        CommentedUserId
+        til_comment
+        user {
+          id
+          email
+          nickname
+        }
+        til {
+          til_content
+          title
         }
       }
     }
