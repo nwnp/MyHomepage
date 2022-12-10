@@ -7,7 +7,32 @@
       </button>
     </div>
     <div v-if="sidebar" class="sidebar-wrap">
-      <div class="sidebar">sidebar</div>
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <div>MYPAGE</div>
+        </div>
+        <div class="sidebar-top">
+          <button @click="clickMe" class="sidebar-btn">마이페이지</button>
+        </div>
+        <div class="sidebar-mid">
+          <ul>
+            <li>내 게시글</li>
+            <li>내 TIL</li>
+            <li>방명록</li>
+            <li>캘린더</li>
+          </ul>
+        </div>
+        <div class="sidebar-bottom">
+          <ul>
+            <li>관리자한테 피드백하기</li>
+            <li>로그아웃</li>
+          </ul>
+        </div>
+        <button class="sidebar-exit" @click="exit">
+          <i class="fa-sharp fa-solid fa-right-from-bracket"></i>
+          <div>닫기</div>
+        </button>
+      </div>
     </div>
   </header>
 </template>
@@ -29,6 +54,12 @@ export default {
         return;
       }
       alert("로그인이 되어 있지 않습니다.");
+    },
+    clickMe() {
+      console.log("clicked");
+    },
+    exit() {
+      this.sidebar = !this.sidebar;
     },
   },
 };
@@ -80,7 +111,78 @@ i {
 }
 
 .sidebar {
+  flex-direction: column;
   background-color: white;
+  padding: 20px;
   width: 55%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  height: 6%;
+  font-size: 1.4em;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+  font-weight: bold;
+  justify-content: center;
+}
+
+.sidebar-top {
+  width: 100%;
+  height: 7%;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.sidebar-btn {
+  width: 100%;
+  height: 60%;
+  border: none;
+  background-color: #3498db;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar-mid {
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;
+}
+
+.sidebar-bottom {
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  font-size: 1.1em;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.sidebar-exit {
+  background-color: #b9b9b9;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  color: #fff;
+  justify-content: center;
+  height: 4%;
+  border-radius: 8px;
+  cursor: pointer;
 }
 </style>
