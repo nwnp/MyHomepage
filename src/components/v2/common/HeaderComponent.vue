@@ -12,20 +12,22 @@
           <div>MYPAGE</div>
         </div>
         <div class="sidebar-top">
-          <button @click="clickMe" class="sidebar-btn">마이페이지</button>
+          <button @click="routing('my-info')" class="sidebar-btn">
+            내 정보
+          </button>
         </div>
         <div class="sidebar-mid">
           <ul>
-            <li>내 게시글</li>
-            <li>내 TIL</li>
-            <li>방명록</li>
-            <li>캘린더</li>
+            <li @click="routing('post')">내 게시글</li>
+            <li @click="routing('til')">내 TIL</li>
+            <li @click="routing('guest-book')">방명록</li>
+            <li @click="routing('calendar')">캘린더</li>
           </ul>
         </div>
         <div class="sidebar-bottom">
           <ul>
-            <li>관리자한테 피드백하기</li>
-            <li>로그아웃</li>
+            <li @click="routing('feedback')">관리자한테 피드백하기</li>
+            <li @click="logout">로그아웃</li>
           </ul>
         </div>
         <button class="sidebar-exit" @click="exit">
@@ -55,11 +57,19 @@ export default {
       }
       alert("로그인이 되어 있지 않습니다.");
     },
-    clickMe() {
-      console.log("clicked");
-    },
     exit() {
       this.sidebar = !this.sidebar;
+    },
+    routing(to) {
+      this.exit();
+      this.$router.push({ name: to, params: { id: this.userId } });
+    },
+    logout() {
+      if (confirm("로그아웃 하시겠습니까?")) {
+        this.exit();
+        this.$store.dispatch("Logout");
+        this.$router.push("/");
+      }
     },
   },
 };
