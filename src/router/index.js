@@ -16,10 +16,12 @@ const routes = [
   },
   {
     path: "/post",
+    name: "post",
     component: () => import("@/views/v2/PostPage.vue"),
   },
   {
     path: "/til",
+    name: "til",
     component: () => import("@/views/v2/TILPage.vue"),
   },
   {
@@ -27,8 +29,24 @@ const routes = [
     component: () => import("@/views/v2/SignupPage.vue"),
   },
   {
+    path: "/feedback",
+    name: "feedback",
+    component: () => import("@/views/v2/FeedbackPage.vue"),
+  },
+  {
     path: "/guest-book",
+    name: "guest-book",
     component: () => import("@/views/v2/GuestBookPage.vue"),
+  },
+  {
+    path: "/my-info/:id",
+    name: "my-info",
+    component: () => import("@/views/v2/MyInfo.vue"),
+  },
+  {
+    path: "/calendar/:id",
+    name: "calendar",
+    component: () => import("@/views/v2/CalendarPage.vue"),
   },
 
   // v1
