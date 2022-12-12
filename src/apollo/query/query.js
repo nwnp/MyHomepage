@@ -127,4 +127,14 @@ export const Query = {
       }
     }
   `,
+  getTilsByUserId: gql`
+    query ($UserId: Int!) {
+      getTilsByUserId(UserId: $UserId) {
+        id
+        title
+        til_content
+        createdAt
+      }
+    }
+  `,
 };

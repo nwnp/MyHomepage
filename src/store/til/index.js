@@ -5,11 +5,13 @@ export default {
     tilCommentRegisterCheck: false,
     tilCommentDeleteCheck: false,
     tilCommentUpdateCheck: false,
+    tilRegisterCheck: false,
   },
   getters: {
     tilCommentRegisterCheck: (state) => state.tilCommentRegisterCheck,
     tilCommentDeleteCheck: (state) => state.tilCommentDeleteCheck,
     tilCommentUpdateCheck: (state) => state.tilCommentUpdateCheck,
+    tilRegisterCheck: (state) => state.tilRegisterCheck,
   },
   mutations: {
     setTilCommentRegisterCheck(state, bool) {
@@ -20,6 +22,9 @@ export default {
     },
     setTilCommentUpdateCheck(state, bool) {
       state.tilCommentUpdateCheck = bool;
+    },
+    setTilRegisterCheck(state, bool) {
+      state.tilRegisterCheck = bool;
     },
   },
   actions: {
@@ -77,6 +82,25 @@ export default {
         console.error(error);
       } finally {
         commit("setTilCommentUpdateCheck", result.data.updateTilComment);
+      }
+    },
+    async registerTil({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.registerTil,
+          variables: {
+            til: {
+              title: payload.title,
+              til_content: payload.til_content,
+              UserId: ~~payload.UserId,
+            },
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        commit("setTilRegisterCheck", result.data.registerTil);
       }
     },
   },

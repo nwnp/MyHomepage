@@ -1,11 +1,26 @@
 <template>
   <div class="post-container">
-    <div class="wrap"></div>
+    <div v-if="userId !== paramId" class="wrap">
+      <RouteComponent />
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import RouteComponent from "@/components/v2/common/RouteComponent.vue";
+import { getCookie } from "@/functions/getCookie";
+
+export default {
+  components: {
+    RouteComponent,
+  },
+  data() {
+    return {
+      userId: getCookie("userId"),
+      paramId: this.$route.params.id,
+    };
+  },
+};
 </script>
 
 <style scoped>

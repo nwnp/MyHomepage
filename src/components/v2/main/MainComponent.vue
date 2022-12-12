@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="main-wrap">
-      <div class="main-card-wrap">
+      <div class="card-wrap">
         <div class="user-info">
           <div class="user-name">
             {{ me.nickname }}({{ me.name }})님의 개발홈피
@@ -32,7 +32,10 @@
           </div>
         </div>
       </div>
-      <div class="main-card-wrap">
+      <div v-if="visitedUserId !== userId">
+        <RouteComponent />
+      </div>
+      <div class="card-wrap">
         <div class="main-card-list">
           <ul>
             <div class="wrap-name">내 최신 게시글</div>
@@ -51,7 +54,7 @@
           </ul>
         </div>
       </div>
-      <div class="main-card-wrap">
+      <div class="card-wrap">
         <div class="main-card-list">
           <ul>
             <div class="wrap-name">내 최신 TIL</div>
@@ -90,11 +93,14 @@
 import { Query } from "@/apollo/query/query";
 import PostDetailModal from "@/components/v2/post/PostDetailModal.vue";
 import TilDetailComponent from "@/components/v2/til/TilDetailComponent.vue";
+import { getCookie } from "@/functions/getCookie";
+import RouteComponent from "@/components/v2/common/RouteComponent.vue";
 
 export default {
   components: {
     PostDetailModal,
     TilDetailComponent,
+    RouteComponent,
   },
   data() {
     return {
@@ -102,6 +108,7 @@ export default {
       getLimitedTils: "",
       postDetailModal: false,
       tilDetailModal: false,
+      visitedUserId: getCookie("userId"),
       userId: this.$route.params.id,
       postInfo: {
         UserId: "",
@@ -209,7 +216,7 @@ export default {
   margin-bottom: 65px;
 }
 
-.main-card-wrap {
+.card-wrap {
   background-color: white;
   padding: 10px;
   margin-bottom: 10px;
