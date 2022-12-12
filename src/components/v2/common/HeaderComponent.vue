@@ -27,6 +27,7 @@
         <div class="sidebar-bottom">
           <ul>
             <li @click="routing('feedback')">관리자한테 피드백하기</li>
+            <!-- <li @click="routing()">친구 찾기</li> -->
             <li @click="logout">로그아웃</li>
           </ul>
         </div>
@@ -64,11 +65,11 @@ export default {
       this.exit();
       this.$router.push({ name: to, params: { id: this.userId } });
     },
-    logout() {
+    async logout() {
       if (confirm("로그아웃 하시겠습니까?")) {
         this.exit();
-        this.$store.dispatch("Logout");
-        this.$router.push("/");
+        await this.$store.dispatch("Logout");
+        await this.$router.push({ name: "home" });
       }
     },
   },

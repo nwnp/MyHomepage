@@ -13,17 +13,32 @@ const routes = [
   {
     path: "/main/:id",
     name: "main",
-    component: () => import("@/views/v2/MainPage.vue"),
+    component: () => import("@/views/v2/main/MainPage.vue"),
+  },
+  {
+    path: "/main/user/:id",
+    name: "main-user",
+    component: () => import("@/views/v2/main/_idx.vue"),
   },
   {
     path: "/post/:id",
     name: "post",
-    component: () => import("@/views/v2/PostPage.vue"),
+    component: () => import("@/views/v2/post/PostPage.vue"),
+  },
+  {
+    path: "/post/user/:id",
+    name: "post-user",
+    component: () => import("@/views/v2/post/_idx.vue"),
   },
   {
     path: "/til/:id",
     name: "til",
-    component: () => import("@/views/v2/TILPage.vue"),
+    component: () => import("@/views/v2/til/TILPage.vue"),
+  },
+  {
+    path: "/til/user/:id",
+    name: "til-user",
+    component: () => import("@/views/v2/til/_idx.vue"),
   },
   {
     path: "/signup",
@@ -37,7 +52,12 @@ const routes = [
   {
     path: "/guest-book/:id",
     name: "guest-book",
-    component: () => import("@/views/v2/GuestBookPage.vue"),
+    component: () => import("@/views/v2/guest-book/GuestBookPage.vue"),
+  },
+  {
+    path: "/guest-book/user/:id",
+    name: "guest-book-user",
+    component: () => import("@/views/v2/guest-book/_idx.vue"),
   },
   {
     path: "/my-info/:id",
@@ -52,7 +72,12 @@ const routes = [
   {
     path: "/calendar/:id",
     name: "calendar",
-    component: () => import("@/views/v2/CalendarPage.vue"),
+    component: () => import("@/views/v2/calendar/CalendarPage.vue"),
+  },
+  {
+    path: "/calendar/user/:id",
+    name: "calendar-user",
+    component: () => import("@/views/v2/calendar/_idx.vue"),
   },
 
   // v1

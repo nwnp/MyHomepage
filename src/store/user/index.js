@@ -46,6 +46,7 @@ export default {
       const { id } = jwtDecode(accessToken);
       document.cookie = `userId=${id};path=/;expires=${date}`;
       document.cookie = `token=${accessToken};path=/;expires=${date}`;
+      window.location.reload();
       commit("setLoginCheck", true);
       commit("setUser", {
         accessToken,
