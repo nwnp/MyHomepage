@@ -1,6 +1,29 @@
 import gql from "graphql-tag";
 
 export const Query = {
+  me: gql`
+    query Me($id: ID!) {
+      me(id: $id) {
+        id
+        githubUrl
+        name
+        email
+        githubUrl
+        blogUrl
+        gender
+        nickname
+        job
+      }
+    }
+  `,
+  followsForLogin: gql`
+    query ($id: ID!) {
+      followsForLogin(id: $id) {
+        following_me
+        im_following
+      }
+    }
+  `,
   meForInfo: gql`
     query ($id: ID!) {
       me(id: $id) {

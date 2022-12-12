@@ -2,6 +2,37 @@
   <div class="main-container">
     <div class="main-wrap">
       <div class="main-card-wrap">
+        <div class="user-info">
+          <div class="user-name">
+            {{ me.nickname }}({{ me.name }})님의 개발홈피
+          </div>
+          <div class="user-email">
+            <i class="fa-sharp fa-solid fa-envelope"></i>
+            {{ me.email }}
+          </div>
+          <div class="user-url">
+            <a :href="me.githubUrl == 'gitless' ? '#' : me.githubUrl">
+              <i class="fa-brands fa-github"></i>
+              {{ me.githubUrl != "gitless" ? me.githubUrl : "Nothing github" }}
+            </a>
+          </div>
+          <div class="user-url">
+            <a :href="me.blogUrl == 'blogless' ? '#' : me.blogUrl">
+              <i class="fa-solid fa-blog"></i>
+              {{ me.blogUrl != "blogless" ? me.blogUrl : "Nothing blog" }}
+            </a>
+          </div>
+          <div class="follow-card">
+            <div class="follower-follower" @click="getFollower">
+              팔로워 {{ followsForLogin.following_me }}
+            </div>
+            <div class="follower-following" @click="getFollowing">
+              팔로잉 {{ followsForLogin.im_following }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-card-wrap">
         <div class="main-card-list">
           <ul>
             <div class="wrap-name">내 최신 게시글</div>
@@ -85,6 +116,8 @@ export default {
         content: "",
         userId: "",
       },
+      me: "",
+      followsForLogin: "",
     };
   },
   apollo: {
@@ -107,6 +140,22 @@ export default {
             UserId: ~~this.userId,
             count: 3,
           },
+        };
+      },
+    },
+    me: {
+      query: Query.me,
+      variables() {
+        return {
+          id: this.$route.params.id,
+        };
+      },
+    },
+    followsForLogin: {
+      query: Query.followsForLogin,
+      variables() {
+        return {
+          id: this.$route.params.id,
         };
       },
     },
@@ -135,6 +184,12 @@ export default {
       if (type == "post") this.postDetailModal = !this.postDetailModal;
       else this.tilDetailModal = !this.tilDetailModal;
     },
+    getFollower() {
+      console.log("get follower");
+    },
+    getFollowing() {
+      console.log("get following");
+    },
   },
 };
 </script>
@@ -158,6 +213,17 @@ export default {
   background-color: white;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user-name {
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 .main-card-list {
@@ -208,5 +274,34 @@ li {
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+.follow-card {
+  display: flex;
+  height: 100%;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.follower-following {
+  border: none;
+  width: 50%;
+  border-left: 1px solid #b9b9b9;
+  border-right: 1px solid #b9b9b9;
+  text-align: center;
+  color: #7a7a7a;
+}
+
+.follower-follower {
+  color: #7a7a7a;
+  border: none;
+  width: 50%;
+  border-left: 1px solid #b9b9b9;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 </style>
