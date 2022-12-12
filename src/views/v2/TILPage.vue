@@ -1,13 +1,17 @@
 <template>
   <div>
-    <h1>TIL PAGE</h1>
+    <TilComponent />
   </div>
 </template>
 
 <script>
 import { isLoggedIn } from "@/functions/isAuthMiddleware";
+import TilComponent from "@/components/v2/til/TilComponent.vue";
 
 export default {
+  components: {
+    TilComponent,
+  },
   created() {
     this.loginCheck();
   },

@@ -60,4 +60,9 @@ export const Mutation = {
       updateTilComment(til: $til)
     }
   `,
+  registerTil: gql`
+    mutation ($til: RegisterTil!) {
+      registerTil(til: $til)
+    }
+  `,
 };

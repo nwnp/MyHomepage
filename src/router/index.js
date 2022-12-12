@@ -12,15 +12,16 @@ const routes = [
   // v2
   {
     path: "/main/:id",
+    name: "main",
     component: () => import("@/views/v2/MainPage.vue"),
   },
   {
-    path: "/post",
+    path: "/post/:id",
     name: "post",
     component: () => import("@/views/v2/PostPage.vue"),
   },
   {
-    path: "/til",
+    path: "/til/:id",
     name: "til",
     component: () => import("@/views/v2/TILPage.vue"),
   },
@@ -34,7 +35,7 @@ const routes = [
     component: () => import("@/views/v2/FeedbackPage.vue"),
   },
   {
-    path: "/guest-book",
+    path: "/guest-book/:id",
     name: "guest-book",
     component: () => import("@/views/v2/GuestBookPage.vue"),
   },
@@ -44,28 +45,33 @@ const routes = [
     component: () => import("@/views/v2/MyInfo.vue"),
   },
   {
+    path: "/register",
+    name: "register",
+    component: () => import("@/views/v2/RegisterPage.vue"),
+  },
+  {
     path: "/calendar/:id",
     name: "calendar",
     component: () => import("@/views/v2/CalendarPage.vue"),
   },
 
   // v1
-  {
-    path: "/v1/main",
-    component: () => import("@/views/v1/MainPage.vue"),
-  },
-  {
-    path: "/v1/signup",
-    component: () => import("@/views/v1/SignupView.vue"),
-  },
-  {
-    path: "/post",
-    component: () => import("@/views/v1/PostView.vue"),
-  },
-  {
-    path: "*",
-    component: () => import("../views/NotFound.vue"),
-  },
+  // {
+  //   path: "/v1/main",
+  //   component: () => import("@/views/v1/MainPage.vue"),
+  // },
+  // {
+  //   path: "/v1/signup",
+  //   component: () => import("@/views/v1/SignupView.vue"),
+  // },
+  // {
+  //   path: "/post",
+  //   component: () => import("@/views/v1/PostView.vue"),
+  // },
+  // {
+  //   path: "*",
+  //   component: () => import("../views/NotFound.vue"),
+  // },
 ];
 
 const router = new VueRouter({

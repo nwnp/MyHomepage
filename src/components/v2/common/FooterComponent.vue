@@ -1,6 +1,6 @@
 <template>
   <footer class="footer-container">
-    <router-link to="/post" class="footer-post">
+    <router-link :to="`/post/${userId}`" class="footer-post">
       <i class="fa-solid fa-file"></i>
       <p>게시글</p>
     </router-link>
@@ -9,7 +9,10 @@
       <i class="fa-solid fa-house-user"></i>
       <p>홈</p>
     </router-link>
-    <router-link to="/til" class="footer-til">
+    <router-link
+      :to="{ name: 'til', params: { id: userId } }"
+      class="footer-til"
+    >
       <i class="fa-solid fa-list"></i>
       <p>TIL</p>
     </router-link>
