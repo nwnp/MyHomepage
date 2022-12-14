@@ -20,14 +20,23 @@ export const Mutation = {
       }
     }
   `,
+  registerPost: gql`
+    mutation ($post: Register!) {
+      registerPost(post: $post) {
+        id
+        title
+        content
+      }
+    }
+  `,
   updatePost: gql`
     mutation ($post: Update!) {
       updatePost(post: $post)
     }
   `,
   deletePost: gql`
-    mutation ($postId: ID!) {
-      deletePost(postId: $postId)
+    mutation ($post: Delete!) {
+      deletePost(post: $post)
     }
   `,
   registerPostComment: gql`
@@ -51,7 +60,7 @@ export const Mutation = {
     }
   `,
   deleteTilComment: gql`
-    mutation ($til: DeleteTilComment!) {
+    mutation ($til: DeleteTil!) {
       deleteTilComment(til: $til)
     }
   `,
@@ -63,6 +72,16 @@ export const Mutation = {
   registerTil: gql`
     mutation ($til: RegisterTil!) {
       registerTil(til: $til)
+    }
+  `,
+  deleteTil: gql`
+    mutation ($til: DeleteTil!) {
+      deleteTil(til: $til)
+    }
+  `,
+  updateTil: gql`
+    mutation ($til: UpdateTil!) {
+      updateTil(til: $til)
     }
   `,
 };

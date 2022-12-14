@@ -2,10 +2,11 @@
   <div class="container">
     <div class="main-wrap">
       <div class="card-container">
-        <div class="card-header">{{ type.toUpperCase() }} 새로 만들기</div>
+        <div class="card-header">
+          <h3>{{ type.toUpperCase() }} 작성</h3>
+        </div>
         <form @submit.prevent="submitBtn">
-          <div>
-            <label for="title">제목</label>
+          <div class="title-wrap">
             <input
               type="text"
               id="title"
@@ -13,17 +14,19 @@
               placeholder="제목 입력"
             />
           </div>
-          <div>
-            <label for="content">내용</label>
-            <input
-              type="text"
+          <div class="content-wrap">
+            <textarea
               id="content"
+              cols="30"
+              rows="15"
               placeholder="내용 입력"
               v-model="content"
-            />
+              class="content-area"
+            ></textarea>
           </div>
-          <button type="submit">등록</button>
+          <button type="submit" class="register-btn">등록</button>
         </form>
+        <button @click="routing" class="cancel-btn">취소</button>
       </div>
     </div>
   </div>
@@ -50,7 +53,7 @@ export default {
       const payload = {
         apollo: this.$apollo,
         title: this.title,
-        til_content: this.content,
+        content: this.content,
         UserId: this.me,
       };
 
@@ -60,13 +63,21 @@ export default {
         if (!result) {
           this.clearForm();
           return alert("TIL 등록에 실패했습니다. 다시 시도해주세요 ❌");
-        } else {
-          this.clearForm();
-          alert("TIL 등록에 성공했습니다 🌠");
-          this.$router.push({ name: "til", params: { id: this.me } });
         }
+        this.clearForm();
+        alert("TIL 등록에 성공했습니다 🌠");
+        this.$router.push({ name: "til", params: { id: this.me } });
+      } else if (this.type == "post") {
+        await this.$store.dispatch("registerPost", payload);
+        const result = await this.$store.getters.registerCheck;
+        if (!result) {
+          this.clearForm();
+          return alert("게시글 등록에 실패했습니다. 다시 시도해주세요 ❌");
+        }
+        this.clearForm();
+        alert("게시글 등록에 성공했습니다 🌠");
+        this.$router.push({ name: "post", params: { id: this.me } });
       }
-      this.clearForm();
     },
     clearForm() {
       this.title = "";
@@ -88,6 +99,9 @@ export default {
       if (trimContent.length < 10) return false;
       else return true;
     },
+    routing() {
+      this.$router.push({ name: this.type, params: { id: this.me } });
+    },
   },
 };
 </script>
@@ -103,6 +117,10 @@ export default {
   height: 90%;
 }
 
+.card-header {
+  text-align: center;
+}
+
 .card-container {
   display: flex;
   flex-direction: column;
@@ -110,5 +128,51 @@ export default {
   border-radius: 5px;
   padding: 10px;
   height: 90%;
+}
+
+.title-wrap {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 1em;
+}
+
+.content-wrap {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.content-area {
+  font-size: 1em;
+  resize: none;
+  border: 1px solid #e5e5e5;
+  padding: 5px;
+}
+
+.register-btn {
+  width: 100%;
+  height: 35px;
+  border: none;
+  color: #fff;
+  background-color: #60b6f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.cancel-btn {
+  border: none;
+  height: 35px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #b9b9b9;
+  color: #fff;
 }
 </style>

@@ -26,7 +26,7 @@ export default {
     },
     routing(to) {
       this.exit();
-      this.$router.push({ name: to, params: { id: this.userId } });
+      this.$router.push({ name: to + "-user", params: { id: this.userId } });
     },
   },
 };

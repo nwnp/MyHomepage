@@ -5,12 +5,14 @@ export default {
   state: {
     updateCheck: false,
     deleteCheck: false,
+    registerCheck: false,
     postCommentRegisterCheck: false,
     postCommentDeleteCheck: false,
     postCommentUpdateCheck: false,
     postModal: false,
   },
   getters: {
+    registerCheck: (state) => state.registerCheck,
     updateCheck: (state) => state.updateCheck,
     deleteCheck: (state) => state.deleteCheck,
     postCommentRegisterCheck: (state) => state.postCommentRegisterCheck,
@@ -18,6 +20,9 @@ export default {
     postCommentUpdateCheck: (state) => state.postCommentUpdateCheck,
   },
   mutations: {
+    setRegisterCheck(state, bool) {
+      state.registerCheck = bool;
+    },
     setUpdateCheck(state, bool) {
       state.updateCheck = bool;
     },
@@ -35,6 +40,24 @@ export default {
     },
   },
   actions: {
+    async registerPost({ commit }, payload) {
+      try {
+        await payload.apollo.mutate({
+          mutation: Mutation.registerPost,
+          variables: {
+            post: {
+              title: payload.title,
+              content: payload.content,
+              UserId: ~~payload.UserId,
+            },
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        commit("setRegisterCheck", true);
+      }
+    },
     async updatePost({ commit }, payload) {
       let result = "";
       try {
@@ -45,15 +68,15 @@ export default {
               PostId: payload.PostId,
               title: payload.title,
               content: payload.content,
+              UserId: payload.UserId,
             },
           },
         });
       } catch (error) {
         console.log(error);
-        commit("setUpdateCheck", false);
-        return;
+      } finally {
+        commit("setUpdateCheck", result.data.updatePost);
       }
-      commit("setUpdateCheck", result.data.updatePost);
     },
 
     async deletePost({ commit }, payload) {
@@ -62,15 +85,17 @@ export default {
         result = await payload.apollo.mutate({
           mutation: Mutation.deletePost,
           variables: {
-            postId: payload.PostId,
+            post: {
+              postId: payload.postId,
+              UserId: payload.UserId,
+            },
           },
         });
       } catch (error) {
         console.log(error);
-        commit("setDeleteCheck", false);
-        return;
+      } finally {
+        commit("setDeleteCheck", result.data.deletePost);
       }
-      commit("setDeleteCheck", result.data.deletePost);
     },
 
     async registerPostComment({ commit }, payload) {
@@ -80,8 +105,8 @@ export default {
           mutation: Mutation.registerPostComment,
           variables: {
             post: {
-              UserId: getCookie("userId"),
-              PostId: payload.PostId,
+              UserId: ~~payload.UserId,
+              PostId: ~~payload.PostId,
               comment: payload.comment,
             },
           },

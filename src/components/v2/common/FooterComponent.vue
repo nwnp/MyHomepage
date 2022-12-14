@@ -4,7 +4,10 @@
       <i class="fa-solid fa-file"></i>
       <p>게시글</p>
     </router-link>
-    <router-link :to="`/main/${userId}`" class="footer-home">
+    <router-link
+      :to="{ name: 'main', params: { id: userId } }"
+      class="footer-home"
+    >
       <!-- <router-link to="/main" class="footer-home"> -->
       <i class="fa-solid fa-house-user"></i>
       <p>홈</p>
