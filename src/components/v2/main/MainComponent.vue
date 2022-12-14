@@ -1,6 +1,9 @@
 <template>
   <div class="main-container">
     <div class="main-wrap">
+      <div v-if="visitedUserId !== userId">
+        <RouteComponent />
+      </div>
       <div class="card-wrap">
         <div class="user-info">
           <div class="user-name">
@@ -32,13 +35,10 @@
           </div>
         </div>
       </div>
-      <div v-if="visitedUserId !== userId">
-        <RouteComponent />
-      </div>
       <div class="card-wrap">
         <div class="main-card-list">
           <ul>
-            <div class="wrap-name">내 최신 게시글</div>
+            <div class="wrap-name">{{ me.nickname }}님의 최신 게시글</div>
             <li v-if="getLimitedPosts.length < 1">
               현재 게시글이 존재하지 않습니다 😭
             </li>
@@ -57,7 +57,7 @@
       <div class="card-wrap">
         <div class="main-card-list">
           <ul>
-            <div class="wrap-name">내 최신 TIL</div>
+            <div class="wrap-name">{{ me.nickname }}님의 최신 TIL</div>
             <li v-if="getLimitedTils.length < 1">
               현재 TIL이 존재하지 않습니다 😭
             </li>
@@ -126,6 +126,14 @@ export default {
       me: "",
       followsForLogin: "",
     };
+  },
+  watch: {
+    getLimitedPosts: function () {
+      this.$apollo.queries.getLimitedPosts.refetch();
+    },
+    getLimitedTils: function () {
+      this.$apollo.queries.getLimitedTils.refetch();
+    },
   },
   apollo: {
     getLimitedPosts: {

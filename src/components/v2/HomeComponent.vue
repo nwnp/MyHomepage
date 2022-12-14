@@ -44,7 +44,11 @@ export default {
   },
   methods: {
     loginCheck() {
-      if (isLoggedIn()) this.$router.push(`/main/${getCookie("userId")}`);
+      if (isLoggedIn())
+        this.$router.push({
+          name: "main",
+          params: { id: getCookie("userId") },
+        });
     },
     async submitLogin() {
       await this.$store.dispatch("Login", {
@@ -61,7 +65,10 @@ export default {
         return;
       }
       alert("로그인에 성공했습니다.");
-      this.$router.push({ path: `/main/${getCookie("userId")}` });
+      await this.$router.push({
+        name: "main",
+        params: { id: getCookie("userId") },
+      });
     },
     clearForm() {
       this.email = "";

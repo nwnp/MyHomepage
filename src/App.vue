@@ -9,8 +9,14 @@
 <script>
 import HeaderComponent from "@/components/v2/common/HeaderComponent.vue";
 import FooterComponent from "@/components/v2/common/FooterComponent.vue";
+import { getCookie } from "./functions/getCookie";
 
 export default {
+  data() {
+    return {
+      userId: getCookie("userId"),
+    };
+  },
   components: {
     HeaderComponent,
     FooterComponent,

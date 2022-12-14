@@ -57,7 +57,6 @@ export default {
   methods: {
     loginCheck() {
       if (!isLoggedIn()) {
-        alert("로그인이 되어 있지 않습니다.");
         this.$router.push("/");
         return;
       }

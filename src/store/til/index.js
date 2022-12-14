@@ -6,12 +6,16 @@ export default {
     tilCommentDeleteCheck: false,
     tilCommentUpdateCheck: false,
     tilRegisterCheck: false,
+    tilDeleteCheck: false,
+    tilUpdateCheck: false,
   },
   getters: {
     tilCommentRegisterCheck: (state) => state.tilCommentRegisterCheck,
     tilCommentDeleteCheck: (state) => state.tilCommentDeleteCheck,
     tilCommentUpdateCheck: (state) => state.tilCommentUpdateCheck,
     tilRegisterCheck: (state) => state.tilRegisterCheck,
+    tilDeleteCheck: (state) => state.tilDeleteCheck,
+    tilUpdateCheck: (state) => state.tilUpdateCheck,
   },
   mutations: {
     setTilCommentRegisterCheck(state, bool) {
@@ -25,6 +29,12 @@ export default {
     },
     setTilRegisterCheck(state, bool) {
       state.tilRegisterCheck = bool;
+    },
+    setTilDeleteCheck(state, bool) {
+      state.tilDeleteCheck = bool;
+    },
+    setTilUpdateCheck(state, bool) {
+      state.tilUpdateCheck = bool;
     },
   },
   actions: {
@@ -92,7 +102,7 @@ export default {
           variables: {
             til: {
               title: payload.title,
-              til_content: payload.til_content,
+              til_content: payload.content,
               UserId: ~~payload.UserId,
             },
           },
@@ -101,6 +111,44 @@ export default {
         console.log(error);
       } finally {
         commit("setTilRegisterCheck", result.data.registerTil);
+      }
+    },
+    async deleteTil({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.deleteTil,
+          variables: {
+            til: {
+              UserId: payload.UserId,
+              tilId: payload.tilId,
+            },
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        commit("setTilDeleteCheck", result.data.deleteTil);
+      }
+    },
+    async updateTil({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.updateTil,
+          variables: {
+            til: {
+              title: payload.title,
+              til_content: payload.til_content,
+              UserId: payload.UserId,
+              tilId: payload.tilId,
+            },
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        commit("setTilUpdateCheck", result.data.updateTil);
       }
     },
   },
