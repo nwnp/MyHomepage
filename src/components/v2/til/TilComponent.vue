@@ -4,9 +4,6 @@
       <div v-if="userId !== paramId" class="wrap">
         <RouteComponent />
       </div>
-      <div v-if="userId === paramId" class="register-component">
-        <RegisterBtnComponent :registerInfo="registerInfo" />
-      </div>
       <div v-if="getTilsByUserId.length === 0" class="til-card-wrap">
         현재 TIL이 존재하지 않습니다 😭
       </div>
@@ -15,6 +12,9 @@
           <div>📌 {{ til.title }}</div>
           <div class="card-content">{{ til.til_content }}</div>
         </div>
+      </div>
+      <div v-if="userId === paramId" class="register-component">
+        <RegisterBtnComponent :registerInfo="registerInfo" />
       </div>
     </div>
     <TilDetailComponent
@@ -80,6 +80,7 @@ export default {
     },
     closeModal() {
       this.tilDetailModal = !this.tilDetailModal;
+      this.$apollo.queries.getTilsByUserId.refetch();
     },
   },
 };
@@ -96,18 +97,28 @@ export default {
 }
 
 .til-wrap {
+  display: flex;
+  flex-direction: column;
   padding: 10px;
   margin-bottom: 65px;
+  align-items: center;
+}
+
+.wrap {
+  width: 100%;
 }
 
 .register-component {
-  width: 100%;
+  width: 30%;
+  position: fixed;
+  bottom: 90px;
 }
 
 .til-card-wrap {
   background-color: white;
   padding: 10px;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .card-list {

@@ -13,10 +13,44 @@
         <div>TITLE</div>
         <div>{{ tilInfo.title }}</div>
       </div>
-      <div class="til-content">{{ tilInfo.content }}</div>
+      <div v-if="~~paramId === ~~userId" class="edit-btn-wrap">
+        <div v-if="!updateTilButton" class="btn-wrap">
+          <button
+            class="update-btn"
+            @click="tilUpdateBtn(tilInfo.content, tilInfo.title)"
+          >
+            수정
+          </button>
+          <button class="delete-btn" @click="deleteTil">삭제</button>
+        </div>
+        <div v-else class="btn-wrap">
+          <button class="update-btn" @click="updateTil">등록</button>
+          <button
+            class="delete-btn"
+            @click="updateTilButton = !updateTilButton"
+          >
+            취소
+          </button>
+        </div>
+      </div>
+      <div v-if="!updateTilButton" class="til-content">
+        {{ tilInfo.content }}
+      </div>
+      <div v-else class="update-til-wrap">
+        <input type="text" v-model="updateTilTitle" class="update-til-title" />
+        <textarea
+          id="update-area"
+          cols="30"
+          rows="10"
+          class="update-til-content"
+          v-model="updateTilContent"
+        >
+        </textarea>
+      </div>
       <div class="til-comment-wrap">
         <form @submit.prevent="registerComment" class="til-comment-register">
           <input
+            class="til-comment-input"
             type="text"
             v-model="inputValue"
             :placeholder="
@@ -42,7 +76,10 @@
                 <div class="comment-title-email">
                   ({{ comment.user.email }})
                 </div>
-                <div v-if="comment.user.id == me" class="comment-edit-button">
+                <div
+                  v-if="comment.user.id == userId"
+                  class="comment-edit-button"
+                >
                   <div
                     @click="
                       commentId == ''
@@ -68,7 +105,7 @@
               >
                 <input
                   type="text"
-                  v-model="updateValue"
+                  v-model="updateCommentValue"
                   :placeholder="comment.til_content"
                 />
                 <button class="edit-button" @click="updateCancel">취소</button>
@@ -99,9 +136,15 @@ export default {
     return {
       getTilWithComment: "",
       inputValue: "",
-      updateValue: "",
+      updateCommentValue: "",
+      updateTilContent: "",
       commentId: "",
-      me: getCookie("userId"),
+      userId: getCookie("userId"),
+      paramId: this.$route.params.id,
+      updateTilButton: false,
+      updateContentTemp: "",
+      updateTitleTemp: "",
+      updateTilTitle: "",
     };
   },
   apollo: {
@@ -151,14 +194,14 @@ export default {
       alert("댓글 삭제가 완료되었습니다 😀");
     },
     async updateComment(commentId) {
-      if (this.checkValue(this.updateValue))
+      if (this.checkValue(this.updateCommentValue))
         return alert("아무것도 입력하지 않았습니다. 다시 시도해주세요 😭");
 
       const payload = {
         apollo: this.$apollo,
         id: commentId,
         CommentedUserId: getCookie("userId"),
-        til_comment: this.updateValue,
+        til_comment: this.updateCommentValue,
       };
       await this.$store.dispatch("updateTilComment", payload);
       const result = await this.$store.getters.tilCommentUpdateCheck;
@@ -166,21 +209,66 @@ export default {
         return alert("댓글 수정을 실패했습니다. 다시 시도해주세요 🙏");
       else {
         this.$apollo.queries.getTilWithComment.refetch();
-        this.updateValue = "";
+        this.updateCommentValue = "";
         this.commentId = "";
         alert("댓글 수정이 완료되었습니다 😀");
       }
     },
     updateCancel() {
       this.commentId = "";
-      this.updateValue = "";
+      this.updateCommentValue = "";
     },
     clearForm() {
       this.inputValue = "";
-      this.updateValue = "";
+      this.updateCommentValue = "";
     },
     checkValue(value) {
       return value.trim() === "";
+    },
+    async deleteTil() {
+      if (confirm("TIL을 삭제하시겠습니까?")) {
+        await this.$store.dispatch("deleteTil", {
+          apollo: this.$apollo,
+          UserId: ~~this.userId,
+          tilId: ~~this.tilInfo.tilId,
+        });
+        const result = await this.$store.getters.tilDeleteCheck;
+        if (!result) {
+          return alert("TIL 삭제에 실패했습니다. 다시 시도해주세요 ❌");
+        }
+
+        alert("TIL을 삭제했습니다");
+        this.$emit("closeModal");
+      }
+    },
+
+    async updateTil() {
+      if (
+        this.updateTilContent == this.updateContentTemp &&
+        this.updateTilTitle == this.updateTitleTemp
+      ) {
+        return alert("내용, 제목 둘 중 하나는 변경을 해야합니다 ❌");
+      }
+      await this.$store.dispatch("updateTil", {
+        apollo: this.$apollo,
+        title: this.updateTilTitle,
+        til_content: this.updateTilContent,
+        UserId: ~~this.userId,
+        tilId: ~~this.tilInfo.tilId,
+      });
+      const result = await this.$store.getters.tilUpdateCheck;
+      if (!result) {
+        return alert("수정에 실패했습니다. 다시 시도해주세요");
+      }
+      alert("수정에 성공했습니다.");
+      this.$emit("closeModal");
+    },
+    tilUpdateBtn(content, title) {
+      this.updateTilContent = content;
+      this.updateContentTemp = content;
+      this.updateTilTitle = title;
+      this.updateTitleTemp = title;
+      this.updateTilButton = !this.updateTilButton;
     },
   },
 };
@@ -217,11 +305,61 @@ h3 {
   font-weight: bold;
 }
 
+.edit-btn-wrap {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn-wrap {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.update-btn {
+  width: 50%;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background-color: #60b6f0;
+  color: #fff;
+}
+
+.delete-btn {
+  width: 50%;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background-color: #b9b9b9;
+  color: #fff;
+}
+
 .til-content {
   border: 1px solid #e5e5e5;
   padding: 5px;
   height: 40%;
   margin-bottom: 10px;
+}
+
+.update-til-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.update-til-title {
+  height: 17px;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.update-til-content {
+  padding: 10px;
+  resize: none;
+  margin-bottom: 10px;
+  border: 1px solid #e5e5e5;
 }
 
 .til-comment-register {
@@ -233,7 +371,7 @@ h3 {
   margin-bottom: 4px;
 }
 
-input {
+.til-comment-input {
   height: 17px;
   padding: 5px;
   width: 70%;

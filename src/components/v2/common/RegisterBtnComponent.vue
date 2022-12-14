@@ -33,5 +33,7 @@ export default {
   background-color: #60b6f0;
   border-radius: 8px;
   margin-bottom: 10px;
+  font-size: 1em;
+  font-weight: bold;
 }
 </style>

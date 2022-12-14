@@ -137,4 +137,14 @@ export const Query = {
       }
     }
   `,
+  getPostsByUserId: gql`
+    query ($id: ID!) {
+      getPostsByUserId(id: $id) {
+        id
+        title
+        content
+        imageUrl
+      }
+    }
+  `,
 };

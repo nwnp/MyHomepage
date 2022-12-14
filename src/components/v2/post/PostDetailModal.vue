@@ -13,10 +13,48 @@
         <div>TITLE</div>
         <div>{{ postInfo.title }}</div>
       </div>
-      <div class="post-content">{{ postInfo.content }}</div>
+      <div v-if="~~paramId === ~~userId" class="edit-btn-wrap">
+        <div v-if="!updatePostButton" class="btn-wrap">
+          <button
+            class="update-btn"
+            @click="postUpdateBtn(postInfo.content, postInfo.title)"
+          >
+            수정
+          </button>
+          <button class="delete-btn" @click="deletePost">삭제</button>
+        </div>
+        <div v-else class="btn-wrap">
+          <button class="update-btn" @click="updatePost">등록</button>
+          <button
+            class="delete-btn"
+            @click="updatePostButton = !updatePostButton"
+          >
+            취소
+          </button>
+        </div>
+      </div>
+      <div v-if="!updatePostButton" class="post-content">
+        {{ postInfo.content }}
+      </div>
+      <div v-else class="update-post-wrap">
+        <input
+          type="text"
+          v-model="updatePostTitle"
+          class="update-post-title"
+        />
+        <textarea
+          id="update-area"
+          cols="30"
+          rows="10"
+          class="update-post-content"
+          v-model="updatePostContent"
+        >
+        </textarea>
+      </div>
       <div class="post-comment-wrap">
         <form @submit.prevent="registerComment" class="post-comment-register">
           <input
+            class="post-comment-input"
             type="text"
             v-model="inputValue"
             :placeholder="
@@ -42,12 +80,15 @@
                 <div class="comment-title-email">
                   ({{ comment.user.email }})
                 </div>
-                <div v-if="comment.user.id == me" class="comment-edit-button">
+                <div
+                  v-if="comment.user.id == userId"
+                  class="comment-edit-button"
+                >
                   <div
                     @click="
                       commentId == ''
                         ? (commentId = comment.id)
-                        : updateCancel()
+                        : commentUpdateCancel()
                     "
                     class="comment-title-button"
                   >
@@ -68,10 +109,12 @@
               >
                 <input
                   type="text"
-                  v-model="updateValue"
+                  v-model="updateCommentValue"
                   :placeholder="comment.post_comment"
                 />
-                <button class="edit-button" @click="updateCancel">취소</button>
+                <button class="edit-button" @click="commentUpdateCancel">
+                  취소
+                </button>
                 <button class="edit-button" @click="updateComment(comment.id)">
                   등록
                 </button>
@@ -99,9 +142,16 @@ export default {
     return {
       getPostWithComment: "",
       inputValue: "",
-      me: getCookie("userId"),
-      updateValue: "",
+      userId: getCookie("userId"),
+      paramId: this.$route.params.id,
+      updateCommentValue: "",
+      updatePostContent: "",
       commentId: "",
+      updatePostValue: "",
+      updatePostButton: false,
+      updatePostTemp: "",
+      updateTitleTemp: "",
+      updatePostTitle: "",
     };
   },
   apollo: {
@@ -124,6 +174,7 @@ export default {
       const payload = {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
+        UserId: this.userId,
         comment: this.inputValue,
       };
       await this.$store.dispatch("registerPostComment", payload);
@@ -158,7 +209,7 @@ export default {
         apollo: this.$apollo,
         PostId: this.postInfo.PostId,
         UserId: getCookie("userId"),
-        comment: this.updateValue,
+        comment: this.updateCommentValue,
         commentId,
       };
       await this.$store.dispatch("updatePostComment", payload);
@@ -172,9 +223,9 @@ export default {
         alert("댓글 수정이 완료되었습니다 😀");
       }
     },
-    updateCancel() {
+    commentUpdateCancel() {
       this.commentId = "";
-      this.updateValue = "";
+      this.updateCommentValue = "";
     },
     checkValue(type) {
       if (type == "register") {
@@ -184,12 +235,56 @@ export default {
         }
         return true;
       } else {
-        if (this.updateValue.trim() == "") {
-          this.updateValue = "";
+        if (this.updateCommentValue.trim() == "") {
+          this.updateCommentValue = "";
           return false;
         }
         return true;
       }
+    },
+    async updatePost() {
+      if (
+        this.updatePostContent == this.updateContentTemp &&
+        this.updatePostTitle == this.updateTitleTemp
+      ) {
+        return alert("내용, 제목 둘 중 하나는 변경을 해야합니다 ❌");
+      }
+      await this.$store.dispatch("updatePost", {
+        apollo: this.$apollo,
+        title: this.updatePostTitle,
+        content: this.updatePostContent,
+        UserId: ~~this.userId,
+        PostId: ~~this.postInfo.PostId,
+      });
+      const result = await this.$store.getters.updateCheck;
+      if (!result) {
+        return alert("수정에 실패했습니다. 다시 시도해주세요");
+      }
+      alert("수정에 성공했습니다.");
+      this.$emit("closeModal");
+    },
+    async deletePost() {
+      if (confirm("댓글을 삭제하시겠습니까?")) {
+        await this.$store.dispatch("deletePost", {
+          apollo: this.$apollo,
+          postId: ~~this.postInfo.PostId,
+          UserId: ~~this.userId,
+        });
+        const result = await this.$store.getters.deleteCheck;
+        if (!result) {
+          return alert("댓글 삭제에 실패했습니다. 다시 시도해주세요 ❌");
+        }
+
+        alert("게시글을 삭제했습니다");
+        this.$emit("closeModal");
+      }
+    },
+    postUpdateBtn(content, title) {
+      this.updatePostContent = content;
+      this.updateContentTemp = content;
+      this.updatePostTitle = title;
+      this.updateTitleTemp = title;
+      this.updatePostButton = !this.updatePostButton;
     },
   },
 };
@@ -226,11 +321,61 @@ h3 {
   font-weight: bold;
 }
 
+.edit-btn-wrap {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn-wrap {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.update-btn {
+  width: 50%;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background-color: #60b6f0;
+  color: #fff;
+}
+
+.delete-btn {
+  width: 50%;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background-color: #b9b9b9;
+  color: #fff;
+}
+
 .post-content {
   border: 1px solid #e5e5e5;
   padding: 5px;
   height: 40%;
   margin-bottom: 10px;
+}
+
+.update-post-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.update-post-title {
+  height: 17px;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.update-post-content {
+  padding: 10px;
+  resize: none;
+  margin-bottom: 10px;
+  border: 1px solid #e5e5e5;
 }
 
 .post-comment-register {
@@ -242,7 +387,7 @@ h3 {
   margin-bottom: 4px;
 }
 
-input {
+.post-comment-input {
   height: 17px;
   padding: 5px;
   width: 70%;
