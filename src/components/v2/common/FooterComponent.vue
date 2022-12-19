@@ -19,7 +19,10 @@
       <i class="fa-solid fa-list"></i>
       <p>TIL</p>
     </router-link>
-    <router-link to="/guest-book" class="footer-guest-book">
+    <router-link
+      :to="{ name: 'guest-book', params: { id: userId } }"
+      class="footer-guest-book"
+    >
       <i class="fa-solid fa-comments"></i>
       <p>방명록</p>
     </router-link>

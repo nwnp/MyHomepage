@@ -13,7 +13,7 @@
         class="post-card-wrap"
       >
         <div class="card-list" @click="clickedPost(id)">
-          <div>📌 {{ post.title }}</div>
+          <div>🚀 {{ post.title }}</div>
           <div class="card-content">{{ post.content }}</div>
         </div>
       </div>

@@ -48,7 +48,7 @@
               :key="(post, id)"
               @click="clickedPost(id, 'DETAIL')"
             >
-              <div class="card-title">📌 {{ post.title }}</div>
+              <div class="card-title">🚀 {{ post.title }}</div>
               <div class="card-content">{{ post.content }}</div>
             </li>
           </ul>
@@ -221,7 +221,7 @@ export default {
 
 .main-wrap {
   padding: 10px;
-  margin-bottom: 65px;
+  margin-bottom: 150px;
 }
 
 .card-wrap {
