@@ -84,11 +84,13 @@ export const Query = {
     }
   `,
   getComments: gql`
-    query {
-      getComments {
-        id
+    query ($id: ID!) {
+      getComments(id: $id) {
         comment
+        id
         secret
+        UserId
+        CommentedUserId
         user {
           id
           email
