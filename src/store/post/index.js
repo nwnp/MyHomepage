@@ -1,5 +1,4 @@
 import { Mutation } from "@/apollo/mutation/mutations";
-import { getCookie } from "@/functions/getCookie";
 
 export default {
   state: {
