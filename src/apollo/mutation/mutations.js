@@ -94,4 +94,9 @@ export const Mutation = {
       deleteComment(commentInfo: $commentInfo)
     }
   `,
+  registerFeedback: gql`
+    mutation ($feedback: InputFeedback!) {
+      registerFeedback(feedback: $feedback)
+    }
+  `,
 };

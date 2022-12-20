@@ -45,7 +45,7 @@ const routes = [
     component: () => import("@/views/v2/SignupPage.vue"),
   },
   {
-    path: "/feedback",
+    path: "/feedback/:id",
     name: "feedback",
     component: () => import("@/views/v2/FeedbackPage.vue"),
   },
