@@ -17,7 +17,6 @@
           <div class="content-wrap">
             <textarea
               id="content"
-              cols="30"
               rows="15"
               placeholder="내용 입력"
               v-model="content"
@@ -110,6 +109,7 @@ export default {
 .container {
   width: 100%;
   height: 100%;
+  overflow: scroll;
 }
 
 .main-wrap {
@@ -123,9 +123,9 @@ export default {
 }
 
 .card-container {
+  background-color: #fff;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
   border-radius: 5px;
   padding: 10px;
   height: 90%;
@@ -158,9 +158,13 @@ input {
   padding: 5px;
 }
 
+textarea {
+  height: 200px;
+}
+
 .register-btn {
   width: 100%;
-  height: 35px;
+  height: 25px;
   border: none;
   color: #fff;
   background-color: #60b6f0;
@@ -170,7 +174,7 @@ input {
 
 .cancel-btn {
   border: none;
-  height: 35px;
+  height: 25px;
   width: 100%;
   border-radius: 8px;
   background-color: #b9b9b9;

@@ -197,4 +197,20 @@ li {
   border-radius: 8px;
   cursor: pointer;
 }
+
+@media (max-height: 500px) {
+  .sidebar {
+    gap: 10px;
+  }
+  .sidebar-btn {
+    height: 80%;
+  }
+  li {
+    font-size: 1em;
+    font-weight: normal;
+  }
+  .sidebar-exit {
+    height: 5%;
+  }
+}
 </style>

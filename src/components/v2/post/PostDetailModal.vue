@@ -1,11 +1,7 @@
 <template>
   <div class="container">
     <div class="modal-wrap">
-      <i
-        class="fa-solid fa-x"
-        style="color: #b9b9b9"
-        @click="$emit('closeModal', 'post')"
-      ></i>
+      <i class="fa-solid fa-x" style="color: #b9b9b9" @click="closeModal"></i>
       <div>
         <h3>게시글 자세히 보기</h3>
       </div>
@@ -167,6 +163,9 @@ export default {
       },
     },
   },
+  created() {
+    this.footerDown();
+  },
   methods: {
     async registerComment() {
       if (!this.checkValue("register"))
@@ -261,7 +260,7 @@ export default {
         return alert("수정에 실패했습니다. 다시 시도해주세요");
       }
       alert("수정에 성공했습니다.");
-      this.$emit("closeModal");
+      this.closeModal();
     },
     async deletePost() {
       if (confirm("댓글을 삭제하시겠습니까?")) {
@@ -276,7 +275,7 @@ export default {
         }
 
         alert("게시글을 삭제했습니다");
-        this.$emit("closeModal");
+        this.closeModal();
       }
     },
     postUpdateBtn(content, title) {
@@ -285,6 +284,13 @@ export default {
       this.updatePostTitle = title;
       this.updateTitleTemp = title;
       this.updatePostButton = !this.updatePostButton;
+    },
+    footerDown() {
+      this.$store.commit("setFooterType", true);
+    },
+    closeModal() {
+      this.$store.commit("setFooterType", false);
+      this.$emit("closeModal", "post");
     },
   },
 };

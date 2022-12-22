@@ -2,7 +2,7 @@
   <div id="app" class="app">
     <HeaderComponent />
     <router-view class="router" />
-    <FooterComponent />
+    <FooterComponent v-if="!footerType" />
   </div>
 </template>
 
@@ -17,6 +17,11 @@ export default {
       userId: getCookie("userId"),
     };
   },
+  computed: {
+    footerType() {
+      return this.$store.getters.footerType;
+    },
+  },
   components: {
     HeaderComponent,
     FooterComponent,
@@ -27,7 +32,6 @@ export default {
 <style scoped>
 .app {
   height: 100%;
-  overflow: hidden;
 }
 .router {
   height: 100%;

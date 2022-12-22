@@ -5,6 +5,7 @@ import Post from "@/store/post";
 import Til from "@/store/til";
 import GuestBook from "@/store/guest-book";
 import Feedback from "@/store/feedback";
+import Common from "@/store/common";
 
 Vue.use(Vuex);
 
@@ -15,5 +16,6 @@ export default new Vuex.Store({
     Til,
     GuestBook,
     Feedback,
+    Common,
   },
 });

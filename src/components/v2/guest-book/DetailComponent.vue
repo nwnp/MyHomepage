@@ -122,7 +122,7 @@ export default {
 <style scoped>
 .wrap {
   padding: 10px;
-  margin-bottom: 65px;
+  margin-bottom: 200px;
 }
 
 .edit-button-wrap {

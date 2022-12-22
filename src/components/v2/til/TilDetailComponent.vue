@@ -1,11 +1,7 @@
 <template>
   <div class="container">
     <div class="modal-wrap">
-      <i
-        class="fa-solid fa-x"
-        style="color: #b9b9b9"
-        @click="$emit('closeModal', 'til')"
-      />
+      <i class="fa-solid fa-x" style="color: #b9b9b9" @click="closeModal" />
       <div>
         <h3>TIL 자세히 보기</h3>
       </div>
@@ -147,6 +143,9 @@ export default {
       updateTilTitle: "",
     };
   },
+  created() {
+    this.footerDown();
+  },
   apollo: {
     getTilWithComment: {
       query: Query.getTilWithComment,
@@ -238,10 +237,9 @@ export default {
         }
 
         alert("TIL을 삭제했습니다");
-        this.$emit("closeModal");
+        this.closeModal();
       }
     },
-
     async updateTil() {
       if (
         this.updateTilContent == this.updateContentTemp &&
@@ -261,7 +259,7 @@ export default {
         return alert("수정에 실패했습니다. 다시 시도해주세요");
       }
       alert("수정에 성공했습니다.");
-      this.$emit("closeModal");
+      this.closeModal();
     },
     tilUpdateBtn(content, title) {
       this.updateTilContent = content;
@@ -269,6 +267,13 @@ export default {
       this.updateTilTitle = title;
       this.updateTitleTemp = title;
       this.updateTilButton = !this.updateTilButton;
+    },
+    footerDown() {
+      this.$store.commit("setFooterType", true);
+    },
+    closeModal() {
+      this.$store.commit("setFooterType", false);
+      this.$emit("closeModal", "til");
     },
   },
 };
