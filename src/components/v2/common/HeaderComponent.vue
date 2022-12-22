@@ -26,6 +26,7 @@
         </div>
         <div class="sidebar-bottom">
           <ul>
+            <li @click="routing('search')">친구 찾기</li>
             <li @click="routing('feedback')">관리자한테 피드백하기</li>
             <!-- <li @click="routing()">친구 찾기</li> -->
             <li @click="logout">로그아웃</li>

@@ -142,7 +142,7 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  margin-bottom: 65px;
+  margin-bottom: 200px;
   align-items: center;
   gap: 10px;
 }
@@ -210,5 +210,14 @@ textarea {
   height: 35px;
   border-radius: 8px;
   color: #fff;
+}
+
+@media (max-width: 350px) {
+  .register-header {
+    font-size: 0.7em;
+  }
+  .comment-title {
+    font-size: 1.2em;
+  }
 }
 </style>

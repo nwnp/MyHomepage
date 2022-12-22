@@ -115,6 +115,7 @@ export default {
 .main-wrap {
   padding: 10px;
   height: 90%;
+  margin-bottom: 200px;
 }
 
 .card-header {

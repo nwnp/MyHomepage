@@ -34,6 +34,16 @@
           />
         </div>
         <div>
+          <label for="name">이름</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="required"
+            v-model="name"
+            required
+          />
+        </div>
+        <div>
           <label for="job">직업</label>
           <input type="text" id="job" v-model="job" />
         </div>
@@ -82,6 +92,7 @@ export default {
       email: "",
       password: "",
       nickname: "",
+      name: "",
       gender: "",
       job: "",
       githubUrl: "",
@@ -93,6 +104,7 @@ export default {
       const payload = {
         email: this.email,
         nickname: this.nickname,
+        name: this.name,
         password: this.password,
         job: this.job,
         gender: this.gender,

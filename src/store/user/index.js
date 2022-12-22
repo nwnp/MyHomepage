@@ -9,10 +9,12 @@ export default {
       userId: "",
     },
     loginCheck: "",
+    searchUserList: "",
   },
   getters: {
     getUser: (state) => state.user,
     loginCheck: (state) => state.loginCheck,
+    searchUserList: (state) => state.searchUserList,
   },
   mutations: {
     setUser(state, payload) {
@@ -20,6 +22,9 @@ export default {
     },
     setLoginCheck(state, bool) {
       state.loginCheck = bool;
+    },
+    setSearchUserList(state, payload) {
+      state.searchUserList = payload;
     },
   },
   actions: {
@@ -53,10 +58,40 @@ export default {
         userId: id,
       });
     },
-    async Logout({ commit }, payload) {
+    Logout({ commit }, payload) {
       deleteCookie("userId");
       deleteCookie("token");
       commit("setLoginCheck", false);
+    },
+    async searchUserByNickname({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.searchUserByNickname,
+          variables: {
+            nickname: payload.nickname,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+        return commit("setSearchUserList", false);
+      }
+      commit("setSearchUserList", result.data.searchUserByNickname);
+    },
+    async searchUserByEmail({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.searchUserByEmail,
+          variables: {
+            email: payload.email,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+        return commit("setSearchUserList", false);
+      }
+      commit("setSearchUserList", result.data.searchUserByEmail);
     },
   },
 };
