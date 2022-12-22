@@ -5,7 +5,8 @@ import { ApolloLink, concat } from "apollo-link";
 import { getCookie } from "@/functions/getCookie";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3000/graphql",
+  // uri: "http://localhost:3000/graphql",
+  uri: "https://api.my-page.co.kr/graphql",
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {

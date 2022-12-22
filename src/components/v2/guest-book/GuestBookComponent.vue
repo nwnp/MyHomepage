@@ -143,7 +143,7 @@ export default {
 }
 
 .wrap {
-  margin-bottom: 150px;
+  margin-bottom: 200px;
   padding: 0 10px 0 10px;
 }
 
