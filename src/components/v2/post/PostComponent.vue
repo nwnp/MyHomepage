@@ -112,7 +112,7 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  margin-bottom: 65px;
+  margin-bottom: 200px;
   align-items: center;
 }
 

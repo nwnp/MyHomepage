@@ -99,4 +99,24 @@ export const Mutation = {
       registerFeedback(feedback: $feedback)
     }
   `,
+  searchUserByNickname: gql`
+    query ($nickname: String!) {
+      searchUserByNickname(nickname: $nickname) {
+        id
+        email
+        nickname
+        name
+      }
+    }
+  `,
+  searchUserByEmail: gql`
+    query ($email: String!) {
+      searchUserByEmail(email: $email) {
+        id
+        email
+        name
+        nickname
+      }
+    }
+  `,
 };

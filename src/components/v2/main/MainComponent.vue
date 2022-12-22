@@ -221,7 +221,7 @@ export default {
 
 .main-wrap {
   padding: 10px;
-  margin-bottom: 150px;
+  margin-bottom: 200px;
 }
 
 .card-wrap {

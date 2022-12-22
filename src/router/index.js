@@ -90,6 +90,11 @@ const routes = [
     component: () => import("@/views/v2/calendar/_idx.vue"),
   },
   {
+    path: "/search",
+    name: "search",
+    component: () => import("@/views/v2/SearchPage.vue"),
+  },
+  {
     path: "*",
     component: () => import("@/views/NotFound.vue"),
   },
