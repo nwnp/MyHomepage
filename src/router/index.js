@@ -75,6 +75,11 @@ const routes = [
     component: () => import("@/views/v2/MyInfo.vue"),
   },
   {
+    path: "/my-info/edit/:id",
+    name: "my-info-edit",
+    component: () => import("@/views/v2/EditMyInfo.vue"),
+  },
+  {
     path: "/register",
     name: "register",
     component: () => import("@/views/v2/RegisterPage.vue"),

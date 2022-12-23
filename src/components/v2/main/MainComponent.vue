@@ -134,6 +134,9 @@ export default {
     getLimitedTils: function () {
       this.$apollo.queries.getLimitedTils.refetch();
     },
+    me: function () {
+      this.$apollo.queries.me.refetch();
+    },
   },
   apollo: {
     getLimitedPosts: {

@@ -10,13 +10,20 @@ export default {
     },
     loginCheck: "",
     searchUserList: "",
+    updateUserCheck: "",
+    me: "",
   },
   getters: {
     getUser: (state) => state.user,
     loginCheck: (state) => state.loginCheck,
     searchUserList: (state) => state.searchUserList,
+    me: (state) => state.me,
+    updateUserCheck: (state) => state.updateUserCheck,
   },
   mutations: {
+    setMe(state, payload) {
+      state.me = payload;
+    },
     setUser(state, payload) {
       state.user = { ...payload };
     },
@@ -25,6 +32,9 @@ export default {
     },
     setSearchUserList(state, payload) {
       state.searchUserList = payload;
+    },
+    setUpdateUserCheck(state, payload) {
+      state.updateUserCheck = payload;
     },
   },
   actions: {
@@ -92,6 +102,25 @@ export default {
         return commit("setSearchUserList", false);
       }
       commit("setSearchUserList", result.data.searchUserByEmail);
+    },
+    async updateUser({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.updateUser,
+          variables: {
+            user: {
+              nickname: payload.nickname,
+              githubUrl: payload.githubUrl,
+              blogUrl: payload.blogUrl,
+            },
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        commit("setUpdateUserCheck", result.data.updateUser);
+      }
     },
   },
 };

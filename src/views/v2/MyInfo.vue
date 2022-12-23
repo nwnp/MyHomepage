@@ -1,13 +1,17 @@
 <template>
   <div>
-    <div class="container">
-      <div class="page-top">내 정보</div>
-    </div>
+    <MyInfoComponent />
   </div>
 </template>
 
 <script>
-export default {};
+import MyInfoComponent from "@/components/v2/MyInfo/MyInfoComponent.vue";
+
+export default {
+  components: {
+    MyInfoComponent,
+  },
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

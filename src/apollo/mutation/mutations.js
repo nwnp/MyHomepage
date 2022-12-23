@@ -119,4 +119,9 @@ export const Mutation = {
       }
     }
   `,
+  updateUser: gql`
+    mutation ($user: UserData!) {
+      updateUser(user: $user)
+    }
+  `,
 };
