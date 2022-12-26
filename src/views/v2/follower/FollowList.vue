@@ -1,15 +1,15 @@
 <template>
   <div>
-    <MyInfoComponent />
+    <FollowComponent />
   </div>
 </template>
 
 <script>
-import MyInfoComponent from "@/components/v2/MyInfo/MyInfoComponent.vue";
+import FollowComponent from "@/components/v2/follow-list/FollowComponent.vue";
 
 export default {
   components: {
-    MyInfoComponent,
+    FollowComponent,
   },
 };
 </script>

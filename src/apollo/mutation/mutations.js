@@ -119,4 +119,14 @@ export const Mutation = {
       }
     }
   `,
+  updateUser: gql`
+    mutation ($user: UserData!) {
+      updateUser(user: $user)
+    }
+  `,
+  registerFollowing: gql`
+    mutation ($followerId: ID!) {
+      registerFollowing(followerId: $followerId)
+    }
+  `,
 };

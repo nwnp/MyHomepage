@@ -25,12 +25,19 @@
               {{ me.blogUrl != "blogless" ? me.blogUrl : "Nothing blog" }}
             </a>
           </div>
+          <div
+            v-if="visitedUserId !== userId"
+            :class="followCheck ? 'unfollow-btn' : 'follow-btn'"
+            @click="followBtn"
+          >
+            {{ followCheck ? "언팔하기" : "팔로우하기" }}
+          </div>
           <div class="follow-card">
-            <div class="follower-follower" @click="getFollower">
-              팔로워 {{ followsForLogin.following_me }}
+            <div class="follower-follower" @click="followList('follower')">
+              팔로잉 {{ followsForLogin.following_me }}
             </div>
-            <div class="follower-following" @click="getFollowing">
-              팔로잉 {{ followsForLogin.im_following }}
+            <div class="follower-following" @click="followList('following')">
+              팔로워 {{ followsForLogin.im_following }}
             </div>
           </div>
         </div>
@@ -110,6 +117,7 @@ export default {
       tilDetailModal: false,
       visitedUserId: getCookie("userId"),
       userId: this.$route.params.id,
+      followCheck: false,
       postInfo: {
         UserId: "",
         modalType: "",
@@ -133,6 +141,9 @@ export default {
     },
     getLimitedTils: function () {
       this.$apollo.queries.getLimitedTils.refetch();
+    },
+    me: function () {
+      this.$apollo.queries.me.refetch();
     },
   },
   apollo: {
@@ -174,6 +185,14 @@ export default {
         };
       },
     },
+    followCheck: {
+      query: Query.followCheck,
+      variables() {
+        return {
+          userId: ~~this.$route.params.id,
+        };
+      },
+    },
   },
   methods: {
     clickedPost(id, type) {
@@ -199,11 +218,37 @@ export default {
       if (type == "post") this.postDetailModal = !this.postDetailModal;
       else this.tilDetailModal = !this.tilDetailModal;
     },
-    getFollower() {
-      console.log("get follower");
+    followList(type) {
+      if (this.userId !== this.visitedUserId) {
+        return this.$router.push({
+          name: "follow-list-idx",
+          params: {
+            id: this.userId,
+          },
+          query: {
+            type: type,
+          },
+        });
+      }
+      this.$router.push({
+        name: "follow-list",
+        params: {
+          id: this.visitedUserId,
+        },
+        query: {
+          type: type,
+        },
+      });
     },
-    getFollowing() {
-      console.log("get following");
+    async followBtn() {
+      await this.$store.dispatch("registerFollowing", {
+        apollo: this.$apollo,
+        followerId: this.userId,
+      });
+      const result = await this.$store.getters.followCheck;
+      if (!result) return alert("다시 시도해주세요.");
+      await this.$apollo.queries.followCheck.refetch();
+      await this.$apollo.queries.followsForLogin.refetch();
     },
   },
 };
@@ -289,6 +334,28 @@ li {
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+.unfollow-btn {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #b9b9b9;
+  border-radius: 4px;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  color: #898989;
+}
+
+.follow-btn {
+  width: 100%;
+  border: 1px solid #60b6f0;
+  background-color: #60b6f0;
+  border-radius: 4px;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  color: #fff;
 }
 
 .follow-card {
