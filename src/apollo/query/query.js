@@ -149,4 +149,25 @@ export const Query = {
       }
     }
   `,
+  followList: gql`
+    query ($info: FollowList!) {
+      followList(info: $info) {
+        followers {
+          id
+          email
+          nickname
+        }
+        followings {
+          id
+          email
+          nickname
+        }
+      }
+    }
+  `,
+  followCheck: gql`
+    query ($userId: Int!) {
+      followCheck(userId: $userId)
+    }
+  `,
 };

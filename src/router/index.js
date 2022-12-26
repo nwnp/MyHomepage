@@ -16,7 +16,7 @@ const routes = [
     component: () => import("@/views/v2/main/MainPage.vue"),
   },
   {
-    path: "/main/user/:id",
+    path: "/main/_idx/:id",
     name: "main-user",
     component: () => import("@/views/v2/main/_idx.vue"),
   },
@@ -26,7 +26,7 @@ const routes = [
     component: () => import("@/views/v2/post/PostPage.vue"),
   },
   {
-    path: "/post/user/:id",
+    path: "/post/_idx/:id",
     name: "post-user",
     component: () => import("@/views/v2/post/_idx.vue"),
   },
@@ -36,7 +36,7 @@ const routes = [
     component: () => import("@/views/v2/til/TILPage.vue"),
   },
   {
-    path: "/til/user/:id",
+    path: "/til/_idx/:id",
     name: "til-user",
     component: () => import("@/views/v2/til/_idx.vue"),
   },
@@ -55,7 +55,7 @@ const routes = [
     component: () => import("@/views/v2/guest-book/GuestBookPage.vue"),
   },
   {
-    path: "/guest-book/user/:id",
+    path: "/guest-book/_idx/:id",
     name: "guest-book-user",
     component: () => import("@/views/v2/guest-book/_idx.vue"),
   },
@@ -90,7 +90,7 @@ const routes = [
     component: () => import("@/views/v2/calendar/CalendarPage.vue"),
   },
   {
-    path: "/calendar/user/:id",
+    path: "/calendar/_idx/:id",
     name: "calendar-user",
     component: () => import("@/views/v2/calendar/_idx.vue"),
   },
@@ -98,6 +98,16 @@ const routes = [
     path: "/search",
     name: "search",
     component: () => import("@/views/v2/SearchPage.vue"),
+  },
+  {
+    path: "/follow-list/:id",
+    name: "follow-list",
+    component: () => import("@/views/v2/follower/FollowList.vue"),
+  },
+  {
+    path: "/follow-list/_idx/:id",
+    name: "follow-list-idx",
+    component: () => import("@/views/v2/follower/_idx.vue"),
   },
   {
     path: "*",

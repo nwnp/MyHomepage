@@ -50,7 +50,7 @@ export default {
       bottomList: [
         { name: "개인정보 수정", value: "my-info-edit" },
         { name: "내 모든 게시글(TIL 포함)", value: "myPosts" },
-        { name: "친구 목록", value: "friendsList" },
+        { name: "친구 목록", value: "follow-list" },
         { name: "이력서 만들기", value: "makeResume" },
       ],
     };
