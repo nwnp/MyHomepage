@@ -10,13 +10,22 @@ export default {
     },
     loginCheck: "",
     searchUserList: "",
+    updateUserCheck: "",
+    followCheck: "",
+    me: "",
   },
   getters: {
     getUser: (state) => state.user,
     loginCheck: (state) => state.loginCheck,
     searchUserList: (state) => state.searchUserList,
+    me: (state) => state.me,
+    updateUserCheck: (state) => state.updateUserCheck,
+    followCheck: (state) => state.followCheck,
   },
   mutations: {
+    setMe(state, payload) {
+      state.me = payload;
+    },
     setUser(state, payload) {
       state.user = { ...payload };
     },
@@ -25,6 +34,12 @@ export default {
     },
     setSearchUserList(state, payload) {
       state.searchUserList = payload;
+    },
+    setUpdateUserCheck(state, payload) {
+      state.updateUserCheck = payload;
+    },
+    setFollowCheck(state, payload) {
+      state.followCheck = payload;
     },
   },
   actions: {
@@ -92,6 +107,43 @@ export default {
         return commit("setSearchUserList", false);
       }
       commit("setSearchUserList", result.data.searchUserByEmail);
+    },
+    async updateUser({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.updateUser,
+          variables: {
+            user: {
+              nickname: payload.nickname,
+              githubUrl: payload.githubUrl,
+              blogUrl: payload.blogUrl,
+            },
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        commit("setUpdateUserCheck", result.data.updateUser);
+      }
+    },
+
+    // 팔로우를 하고 있지 않으면 follow
+    // 팔로우를 하고 있으면 unfollow
+    async registerFollowing({ commit }, payload) {
+      let result = "";
+      try {
+        result = await payload.apollo.mutate({
+          mutation: Mutation.registerFollowing,
+          variables: {
+            followerId: ~~payload.followerId,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        commit("setFollowCheck", result.data.registerFollowing);
+      }
     },
   },
 };
